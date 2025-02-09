@@ -129,33 +129,67 @@ function PushNotificationManager() {
 }
 
 function InstallPrompt() {
-  const [isIOS, setIsIOS] = useState(false)
-  const [isStandalone, setIsStandalone] = useState(false)
+  const [isIOS, setIsIOS] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null); // For PWA install
+  const [isInstallable, setIsInstallable] = useState(false);
 
   useEffect(() => {
     setIsIOS(
       /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream
-    )
+    );
+    setIsStandalone(window.matchMedia('(display-mode: standalone)').matches);
 
-    setIsStandalone(window.matchMedia('(display-mode: standalone)').matches)
-  }, [])
+    // Listen for beforeinstallprompt event to handle installation on supported browsers
+    const promptEventHandler = (event: any) => {
+      event.preventDefault(); // Prevent the browser's default install prompt
+      setDeferredPrompt(event); // Save the event so it can be triggered later
+      setIsInstallable(true); // Make install button visible
+    };
+
+    window.addEventListener('beforeinstallprompt', promptEventHandler);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', promptEventHandler);
+    };
+  }, []);
+
+  const handleInstall = () => {
+    if (deferredPrompt) {
+      // Show the install prompt to the user
+      deferredPrompt?.prompt();
+
+      // Wait for the user's response
+      deferredPrompt?.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        setDeferredPrompt(null); // Reset the deferred prompt
+        setIsInstallable(false); // Hide install button after prompt
+      });
+    }
+  };
 
   if (isStandalone) {
-    return null // Don't show install button if already installed
+    return null; // Don't show install button if the app is already installed
   }
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
       <h3 className="text-2xl font-semibold text-gray-800 mb-4">Install App</h3>
 
-      <button
-        onClick={() => {/* Add your install logic here */ }}
-        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
-      >
-        Add to Home Screen
-      </button>
+      {isInstallable && (
+        <button
+          onClick={handleInstall}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+        >
+          Add to Home Screen
+        </button>
+      )}
 
-      {isIOS && (
+      {isIOS && !isInstallable && (
         <p className="text-gray-700">
           To install this app on your iOS device, tap the share button{" "}
           <span role="img" aria-label="share icon" className="inline-block">
