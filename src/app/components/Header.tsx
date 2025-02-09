@@ -58,13 +58,13 @@ const Header = () => {
             </button>
             <ul className="space-y-4 text-center text-white">
               <li>
-                <Link href="/dashboard">Home</Link>
+                <Link href="/Dashboard">Home</Link>
               </li>
               <li>
                 <Link href="/">Search</Link>
               </li>
               <li>
-                <Link href="/dashboard">Notifications</Link>
+                <Link href="/Dashboard">Notifications</Link>
               </li>
               <li>
                 <Link href="/profile">Profile</Link>
