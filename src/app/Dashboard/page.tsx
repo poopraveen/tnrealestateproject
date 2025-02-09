@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Pie, Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -27,8 +28,10 @@ ChartJS.register(
   PointElement,  // Register the PointElement
   LineElement    // Register the LineElement
 );
+import Footer from "./Footer";
 
 const Dashboard = () => {
+  const [name, setName] = useState("")
   const [pieData, setPieData] = useState({
     labels: ['Red', 'Blue', 'Yellow'],
     datasets: [{
@@ -116,40 +119,79 @@ const Dashboard = () => {
     cutout: '60%', // This makes the chart a donut
   };
 
+//    const router = useRouter();
+  
+    // Navigation functions
+    const navigateToDashboard = () => {
+        setName("home")
+        // const router = useRouter();
+        // router.push('/Dashboard');
+    };
+  
+    const navigateHome = () => {
+      //router.push('/');
+      setName("Dashboard")
+    };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {/* Pie Chart Card */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h3 className="text-xl font-semibold mb-4">Pie Chart</h3>
-        <div className="relative">
-          <Pie data={pieData} />
+    <>/
+    <h1>{name}</h1>
+    <div className="flex flex-col h-screen">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 flex-grow">
+        {/* Pie Chart Card */}
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h3 className="text-xl font-semibold mb-4">Pie Chart</h3>
+          <div className="relative">
+            <Pie data={pieData} />
+          </div>
         </div>
-      </div>
 
-      {/* Line Chart Card */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h3 className="text-xl font-semibold mb-4">Line Chart</h3>
-        <div className="relative">
-          <Line data={lineData} />
+        {/* Line Chart Card */}
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h3 className="text-xl font-semibold mb-4">Line Chart</h3>
+          <div className="relative">
+            <Line data={lineData} />
+          </div>
         </div>
-      </div>
 
-      {/* Bar Chart Card */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h3 className="text-xl font-semibold mb-4">Bar Chart</h3>
-        <div className="relative">
-          <Bar data={barData} />
+        {/* Bar Chart Card */}
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h3 className="text-xl font-semibold mb-4">Bar Chart</h3>
+          <div className="relative">
+            <Bar data={barData} />
+          </div>
         </div>
-      </div>
 
-      {/* Circular (Donut) Chart Card */}
-      <div className="bg-white shadow-md rounded-lg p-4">
-        <h3 className="text-xl font-semibold mb-4">Circular Chart (Donut)</h3>
-        <div className="relative">
-          <Doughnut data={circularData} options={circularOptions} />
+        {/* Circular (Donut) Chart Card */}
+        <div className="bg-white shadow-md rounded-lg p-4">
+          <h3 className="text-xl font-semibold mb-4">Circular Chart (Donut)</h3>
+          <div className="relative">
+            <Doughnut data={circularData} options={circularOptions} />
+          </div>
         </div>
       </div>
     </div>
+    <div>
+      {/* Render the Hamburger Menu Component */}
+      {/* <HamburgerMenu /> */}
+
+      {/* Bottom Navigation Menu */}
+      <div className="bg-gray-800 fixed bottom-0 left-0 right-0 shadow-lg flex justify-around items-center p-4">
+        <button onClick={navigateToDashboard} className="text-white hover:text-blue-500">
+          <span className="block text-xs">Home</span>
+        </button>
+        <button onClick={navigateHome} className="text-white hover:text-blue-500">
+          <span className="block text-xs">Search</span>
+        </button>
+        <button onClick={navigateToDashboard} className="text-white hover:text-blue-500">
+          <span className="block text-xs">Notifications</span>
+        </button>
+        <button onClick={navigateHome} className="text-white hover:text-blue-500">
+          <span className="block text-xs">Profile</span>
+        </button>
+      </div>
+    </div>
+    </>
   );
 };
 
