@@ -75,3 +75,16 @@ footer {
   padding: 15px;
 }
 
+/* globals.css */
+.input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-top: 8px;
+}
+
+.bg-light-beige {
+  background-color: #f5f5dc; /* Light beige background */
+}
+
