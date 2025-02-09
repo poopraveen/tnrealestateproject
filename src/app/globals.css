@@ -3,9 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-color: #4A90E2; /* Blue - Primary color for buttons and accents */
+  --secondary-color: #50E3C2; /* Teal - Secondary color for accents */
+  --accent-color: #F5A623; /* Warm Yellow - Call to action, highlights */
+  --background-color: #F5F5F5; /* Light Gray - For backgrounds and surfaces */
+  --light-gray: #D9D9D9; /* Light Gray - For borders or subtle elements */
+  --dark-gray: #333333; /* Dark Gray - Text color for headings and primary text */
+  --text-light: #7F8C8D; /* Light Gray Text - For secondary text */
+  --error-color: #E74C3C; /* Red - For errors or important warnings */
+  --success-color: #2ECC71; /* Green - For success or confirmation */
+  --warning-color: #F39C12; /* Yellow - For warning messages */
+  
+  --chocolate-cream: #D5B29C; /* Light Chocolate Cream - Warm, professional background color */
+  --deep-blue: #2C3E50; /* Deep Blue - For footer or header backgrounds */
+  --light-chocolate: #F1E0C6; /* Light Chocolate - For soft background accents */
+  
+  --white: #FFFFFF; /* Pure White - Used for text or backgrounds */
+  --off-white: #F8F8F8; /* Slightly off-white for background */
+  --cool-gray: #BDC3C7; /* Cool Gray - Soft background or borders */
+  --soft-beige: #F9E4D4; /* Soft Beige - Light and elegant background color */
+  
+  --real-estate-dark: #34495E; /* Rich Dark Blue/Gray - For headers or footers */
+  --real-estate-light: #F2F3F4; /* Light Grayish Background for cards or sections */
+  
+  --highlight-yellow: #FFDC00; /* Bright Yellow - For highlights */
+  --sky-blue: #87CEEB; /* Light Sky Blue - For soft background areas */
+  --peach: #FF9E6A; /* Soft Peach - A warm color for buttons or call-to-action elements */
+  
+  --neutral-black: #2C2C2C; /* Deep Black - Text or headings */
+  --neutral-white: #FAFAFA; /* White Background */
+  --light-neutral: #E0E0E0; /* Light Neutral - Background sections */
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -15,7 +44,34 @@
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background-color);
+  color: var(--dark-gray);
 }
+
+header {
+  background-color: var(--real-estate-dark);
+  color: var(--white);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+.card {
+  background-color: var(--soft-beige);
+  box-shadow: 0 2px 4px var(--cool-gray);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+footer {
+  background-color: var(--real-estate-dark);
+  color: var(--white);
+  padding: 15px;
+}
+

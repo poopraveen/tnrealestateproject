@@ -11,6 +11,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        'chocolate-cream': '#D2B48C',
       },
     },
   },

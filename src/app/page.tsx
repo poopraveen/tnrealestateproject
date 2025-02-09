@@ -78,53 +78,52 @@ function PushNotificationManager() {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">Push Notifications</h3>
+    <div className="pb-10 p-6 bg-amber-100 rounded-lg shadow-lg max-w-md mx-auto text-black mb-6">
+  <h3 className="text-2xl font-semibold text-gray-800 mb-4">Push Notifications</h3>
 
-      {subscription ? (
-        <>
-          <p className="text-gray-700 mb-4">You are subscribed to push notifications.</p>
-          <button
-            onClick={unsubscribeFromPush}
-            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 mb-4"
-          >
-            Unsubscribe
-          </button>
+  {subscription ? (
+    <>
+      <p className="text-gray-700 mb-4">You are subscribed to push notifications.</p>
+      <button
+        onClick={unsubscribeFromPush}
+        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 mb-4 w-full sm:w-auto"
+      >
+        Unsubscribe
+      </button>
 
-          <input
-            type="text"
-            placeholder="Enter notification message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+      <input
+        type="text"
+        placeholder="Enter notification message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className="border border-gray-300 rounded-md p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
 
-          <button
-            onClick={sendTestNotification}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            Send Test
-          </button>
-        </>
-      ) : (
-        <>
-          <p className="text-gray-700 mb-4">You are not subscribed to push notifications.</p>
-          <button
-            onClick={subscribeToPush}
-            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-          >
-            Subscribe
-          </button>
-          <button
-            onClick={navigateToDashboard}
-            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-          >
-            Redirect to Dashboard
-          </button>
-          
-        </>
-      )}
-    </div>
+      <button
+        onClick={sendTestNotification}
+        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full sm:w-auto"
+      >
+        Send Test
+      </button>
+    </>
+  ) : (
+    <>
+      <p className="text-gray-700 mb-4">You are not subscribed to push notifications.</p>
+      <button
+        onClick={subscribeToPush}
+        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 mb-4 w-full sm:w-auto"
+      >
+        Subscribe
+      </button>
+      <button
+        onClick={navigateToDashboard}
+        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 w-full sm:w-auto"
+      >
+        Redirect to Dashboard
+      </button>
+    </>
+  )}
+</div>
   )
 }
 
@@ -177,32 +176,32 @@ function InstallPrompt() {
   }
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md max-w-md mx-auto">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">Install App</h3>
+    <div className="pb-10 p-6 bg-amber-100 rounded-lg shadow-lg max-w-md mx-auto text-black mb-6">
+  <h3 className="text-2xl font-semibold text-gray-800 mb-4">Install App</h3>
 
-      {isInstallable && (
-        <button
-          onClick={handleInstall}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
-        >
-          Add to Home Screen
-        </button>
-      )}
+  {isInstallable && (
+    <button
+      onClick={handleInstall}
+      className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4 w-full sm:w-auto"
+    >
+      Add to Home Screen
+    </button>
+  )}
 
-      {isIOS && !isInstallable && (
-        <p className="text-gray-700">
-          To install this app on your iOS device, tap the share button{" "}
-          <span role="img" aria-label="share icon" className="inline-block">
-            ⎋
-          </span>{" "}
-          and then "Add to Home Screen"
-          <span role="img" aria-label="plus icon" className="inline-block">
-            ➕
-          </span>
-          .
-        </p>
-      )}
-    </div>
+  {isIOS && !isInstallable && (
+    <p className="text-gray-700">
+      To install this app on your iOS device, tap the share button{" "}
+      <span role="img" aria-label="share icon" className="inline-block">
+        ⎋
+      </span>{" "}
+      and then "Add to Home Screen"
+      <span role="img" aria-label="plus icon" className="inline-block">
+        ➕
+      </span>
+      .
+    </p>
+  )}
+</div>
   );
 }
 
