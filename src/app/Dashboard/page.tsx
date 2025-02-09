@@ -82,9 +82,9 @@ const Dashboard = () => {
       tooltip: {
         callbacks: {
           // Define the tooltip callback with proper typing
-          label: function (tooltipItem: TooltipItem) {
+          label: function (tooltipItem: TooltipItem<any>) {
             const dataset = tooltipItem.dataset;
-            const total = dataset.data.reduce((acc, value) => acc + value, 0); // Calculate total
+            const total = dataset.data.reduce((acc: any, value: any) => acc + value, 0); // Calculate total
             const currentValue = dataset.data[tooltipItem.dataIndex]; // Current value
             const percentage = ((currentValue / total) * 100).toFixed(2); // Calculate percentage
 

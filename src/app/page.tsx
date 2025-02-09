@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
-import { subscribeUser, unsubscribeUser, sendNotification } from './actions'
+import { subscribeUser, unsubscribeUser, sendNotification } from '../app/actions'
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
@@ -26,7 +26,7 @@ function PushNotificationManager() {
   };
 
   const [isSupported, setIsSupported] = useState(false)
-  const [subscription, setSubscription] = useState<PushSubscription | null>(
+  const [subscription, setSubscription] = useState<any>(
     null
   )
   const [message, setMessage] = useState('')
@@ -43,13 +43,13 @@ function PushNotificationManager() {
       scope: '/',
       updateViaCache: 'none',
     })
-    const sub = await registration.pushManager.getSubscription()
+    const sub: any = await registration.pushManager.getSubscription()
     setSubscription(sub)
   }
 
   async function subscribeToPush() {
     const registration = await navigator.serviceWorker.ready
-    const sub = await registration.pushManager.subscribe({
+    const sub: any = await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(
         process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
