@@ -53,14 +53,14 @@ header {
   color: var(--white);
 }
 
-button {
+/* button {
   background-color: var(--primary-color);
   color: var(--white);
 }
 
 button:hover {
   background-color: var(--accent-color);
-}
+} */
 
 .card {
   background-color: var(--soft-beige);
