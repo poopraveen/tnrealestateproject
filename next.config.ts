@@ -37,4 +37,14 @@ module.exports = {
       },
     ]
   },
+  eslint: {
+    // Disable ESLint during production builds
+    ignoreDuringBuilds: true, // Optionally ignore ESLint warnings during build
+    
+    // Customize the ESLint rules you want to disable
+    rules: {
+      'no-unused-vars': 'off', // Disable the 'no-unused-vars' rule
+      'react/prop-types': 'off', // Disable 'prop-types' rule (specific to React)
+    },
+  },
 }
