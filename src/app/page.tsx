@@ -215,42 +215,41 @@
 // }
 
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../store/store";
+import { fetchPieData, fetchBarData, fetchProjectData } from "../store/slices/dataSlice";
 import { PieChart, Pie, Cell, Legend, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import Carousel from "./components/carousel";
 
-const pieData = [
-  { name: "Sold", value: 4, color: "#00C49F" },
-  { name: "Available", value: 4, color: "#0088FE" },
-  { name: "Reserved", value: 2, color: "#FFBB28" },
-];
-
-const barData = [
-  { name: "July", SM1: 4, SM2: 3, SM3: 3 },
-  { name: "Aug", SM1: 6, SM2: 5, SM3: 5 },
-  { name: "Sep", SM1: 8, SM2: 3, SM3: 4 },
-  { name: "Today", SM1: 10, SM2: 7, SM3: 7 },
-];
-
-const projectData = [
-  { title: "Project Gamma", description: "Mobile app development", image: "/images/project_gamma.jpg" },
-  { title: "Project Delta", description: "SEO optimization", image: "/images/project_delta.jpg" },
-  { title: "Project Beta", description: "Web development", image: "/images/project_beta.jpg" },
-];
-
 const HomeScreen: React.FC = () => {
   const router = useRouter();
-  const navigateToLeadManagement = () => {
-    router.push("/leadmanagement");
-  };
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchPieData());
+    dispatch(fetchBarData());
+    dispatch(fetchProjectData());
+  }, [dispatch]);
+
+  const { pieData, barData, projectData, status, error } = useSelector((state: RootState) => state.data);
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (status === "failed") {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold">SM NAGAR</h1>
         <p className="text-gray-600">ABCD PROMOTERS</p>
       </div>
+
       <div className="bg-white p-4 rounded-lg shadow-md mb-4">
         <h2 className="text-lg font-semibold">Plot Summary</h2>
         <ResponsiveContainer width="100%" height={250}>
@@ -264,6 +263,7 @@ const HomeScreen: React.FC = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
+
       <div className="bg-white p-4 rounded-lg shadow-md mb-4">
         <h2 className="text-lg font-semibold">Plots per Project</h2>
         <ResponsiveContainer width="100%" height={250}>
@@ -278,18 +278,21 @@ const HomeScreen: React.FC = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-        <div onClick={navigateToLeadManagement} className="bg-white p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer">
-          <img src="/images/lead_generation.jpg" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
-          <div className="ml-4">
-            <h2 className="text-lg font-semibold">Lead Generation</h2>
-            <p className="text-gray-500">Updated daily</p>
-          </div>
+
+      <div onClick={() => router.push("/leadmanagement")} className="bg-white p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer">
+        <img src="/images/lead_generation.jpg" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
+        <div className="ml-4">
+          <h2 className="text-lg font-semibold">Lead Generation</h2>
+          <p className="text-gray-500">Updated daily</p>
         </div>
+      </div>
+
       <div className="bg-white p-4 rounded-lg shadow-md mb-4">
         <h2 className="text-lg font-semibold">Lead Generation Trends</h2>
         <p className="text-2xl font-bold">250 leads</p>
         <p className="text-green-500">Last 30 days +12%</p>
       </div>
+
       <div className="bg-white p-4 rounded-lg shadow-md mb-4">
         <h2 className="text-lg font-semibold">Projects</h2>
         <Carousel>
@@ -307,3 +310,4 @@ const HomeScreen: React.FC = () => {
 };
 
 export default HomeScreen;
+
