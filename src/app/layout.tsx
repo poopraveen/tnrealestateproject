@@ -30,7 +30,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased chocolate-cream`}>
         <ReduxProvider>
           <Header />
-          {children}
+          <main className="flex-1 pb-20"> {/* Ensure main content has bottom padding */}
+            {children}
+          </main>
           <Footer />
         </ReduxProvider>
       </body>

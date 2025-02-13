@@ -67,6 +67,7 @@ export const fetchLeads = createAsyncThunk<Lead[]>("data/fetchLeads", async () =
   return response.json();
 });
 
+// Create Slice
 const dataSlice = createSlice({
   name: "data",
   initialState,
@@ -88,6 +89,9 @@ const dataSlice = createSlice({
       if (lead) {
         lead.status = action.payload.status;
       }
+    },
+    addLead: (state, action: PayloadAction<Lead>) => {
+      state.leads.push(action.payload); // Add new lead to Redux state
     },
   },
   extraReducers: (builder) => {
@@ -142,5 +146,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { setPieData, setBarData, setProjectData, setLeads, updateLeadStatus } = dataSlice.actions;
+// Export Reducers
+export const { setPieData, setBarData, setProjectData, setLeads, updateLeadStatus, addLead } = dataSlice.actions;
 export default dataSlice.reducer;
