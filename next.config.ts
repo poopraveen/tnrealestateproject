@@ -1,50 +1,46 @@
-module.exports = {
+import { NextConfig } from "next";
+import path from "path";
+
+const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         ],
       },
       {
-        source: '/sw.js',
+        source: "/sw.js",
         headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/javascript; charset=utf-8',
-          },
-          {
-            key: 'Cache-Control',
-            value: 'no-cache, no-store, must-revalidate',
-          },
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self'",
-          },
+          { key: "Content-Type", value: "application/javascript; charset=utf-8" },
+          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
+          { key: "Content-Security-Policy", value: "default-src 'self'; script-src 'self'" },
         ],
       },
-    ]
+    ];
   },
+
   eslint: {
-    // Disable ESLint during production builds
-    ignoreDuringBuilds: true, // Optionally ignore ESLint warnings during build
-    
-    // Customize the ESLint rules you want to disable
+    ignoreDuringBuilds: true, // Ignore ESLint warnings during production builds
+  },
+
+  eslintConfig: {
     rules: {
-      'no-unused-vars': 'off', // Disable the 'no-unused-vars' rule
-      'react/prop-types': 'off', // Disable 'prop-types' rule (specific to React)
+      "no-unused-vars": "off",
+      "react/prop-types": "off",
     },
   },
-}
+
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname, "src"), // Ensures `@` points to `src/`
+    };
+    return config;
+  },
+};
+
+export default nextConfig;

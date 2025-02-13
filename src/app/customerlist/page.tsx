@@ -48,13 +48,6 @@ const CustomerList: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="fixed bottom-0 left-0 w-full bg-white p-4 flex justify-around border-t">
-        <button className="text-gray-600">🏠</button>
-        <button className="text-gray-600">👤</button>
-        <button className="text-gray-600">📄</button>
-        <button className="text-gray-600">📍</button>
-        <button className="text-gray-600">⚙️</button>
-      </div>
     </div>
   );
 };

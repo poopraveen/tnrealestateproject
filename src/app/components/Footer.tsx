@@ -1,20 +1,23 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="bg-gray-800 fixed bottom-0 left-0 right-0 shadow-lg flex justify-around items-center p-4">
-      <Link href="/customerlist" className="text-white hover:text-blue-500 text-xs">
-        Home
-      </Link>
-      <Link href="/maps" className="text-white hover:text-blue-500 text-xs">
-        Search
-      </Link>
-      <Link href="/Dashboard" className="text-white hover:text-blue-500 text-xs">
-        Notifications
-      </Link>
-      <Link href="/profile" className="text-white hover:text-blue-500 text-xs">
-        Profile
-      </Link>
+    <div className="fixed bottom-0 left-0 w-full bg-white p-4 flex justify-around border-t border-gray-300 shadow-md">
+      {[
+        { href: "/", icon: "🏠", label: "Home" },
+        { href: "/customerlist", icon: "👤", label: "Profile" },
+        { href: "/Dashboard", icon: "📄", label: "Dashboard" },
+        { href: "/maps", icon: "📍", label: "Maps" },
+        { href: "/profile", icon: "⚙️", label: "Settings" },
+      ].map((item, index) => (
+        <Link
+          key={index}
+          href={item.href}
+          className="text-gray-800 text-xl transition-transform duration-300 transform hover:-translate-y-1 hover:scale-110"
+        >
+          {item.icon}
+        </Link>
+      ))}
     </div>
   );
 };

@@ -20,10 +20,18 @@ interface ProjectData {
   image: string;
 }
 
+interface Lead {
+  id: number;
+  name: string;
+  date: string;
+  status: "new" | "pending" | "finished";
+}
+
 interface DataState {
   pieData: PieData[];
   barData: BarData[];
   projectData: ProjectData[];
+  leads: Lead[];
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -33,6 +41,7 @@ const initialState: DataState = {
   pieData: [],
   barData: [],
   projectData: [],
+  leads: [],
   status: "idle",
   error: null,
 };
@@ -53,6 +62,11 @@ export const fetchProjectData = createAsyncThunk<ProjectData[]>("data/fetchProje
   return response.json();
 });
 
+export const fetchLeads = createAsyncThunk<Lead[]>("data/fetchLeads", async () => {
+  const response = await fetch("/api/leads");
+  return response.json();
+});
+
 const dataSlice = createSlice({
   name: "data",
   initialState,
@@ -65,6 +79,15 @@ const dataSlice = createSlice({
     },
     setProjectData: (state, action: PayloadAction<ProjectData[]>) => {
       state.projectData = action.payload;
+    },
+    setLeads: (state, action: PayloadAction<Lead[]>) => {
+      state.leads = action.payload;
+    },
+    updateLeadStatus: (state, action: PayloadAction<{ id: number; status: "new" | "pending" | "finished" }>) => {
+      const lead = state.leads.find((lead) => lead.id === action.payload.id);
+      if (lead) {
+        lead.status = action.payload.status;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -103,9 +126,21 @@ const dataSlice = createSlice({
       .addCase(fetchProjectData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message ?? "Failed to fetch Project Data";
+      })
+
+      .addCase(fetchLeads.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchLeads.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.leads = action.payload;
+      })
+      .addCase(fetchLeads.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? "Failed to fetch Leads";
       });
   },
 });
 
-export const { setPieData, setBarData, setProjectData } = dataSlice.actions;
+export const { setPieData, setBarData, setProjectData, setLeads, updateLeadStatus } = dataSlice.actions;
 export default dataSlice.reducer;
