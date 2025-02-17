@@ -37,7 +37,7 @@ const AddLeadModal = ({ isOpen, onClose }) => {
       };
 
       // ✅ Update Redux State (Append New Lead)
-      dispatch(setLeads([...leads, newLead])); 
+      dispatch(setLeads([...leads, newLead]));
 
       onClose(); // Close modal
     },
@@ -50,16 +50,16 @@ const AddLeadModal = ({ isOpen, onClose }) => {
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity"
       aria-hidden={!isOpen}
     >
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96 transform transition-all scale-100">
-        <h2 className="text-lg font-semibold mb-4">Add New Lead</h2>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 transform transition-all scale-100">
+        <h2 className="text-lg font-semibold mb-4 text-black dark:text-white">Add New Lead</h2>
 
         <form onSubmit={formik.handleSubmit}>
           {/* Full Name */}
-          <label className="block text-sm font-medium">Full Name</label>
+          <label className="block text-sm font-medium text-black dark:text-white">Full Name</label>
           <input
             type="text"
             name="name"
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             onChange={formik.handleChange}
             value={formik.values.name}
             autoFocus
@@ -67,56 +67,56 @@ const AddLeadModal = ({ isOpen, onClose }) => {
           {formik.errors.name && <p className="text-red-500 text-xs">{formik.errors.name}</p>}
 
           {/* Phone Number */}
-          <label className="block text-sm font-medium mt-3">Phone Number</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Phone Number</label>
           <input
             type="text"
             name="phone"
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             onChange={formik.handleChange}
             value={formik.values.phone}
           />
           {formik.errors.phone && <p className="text-red-500 text-xs">{formik.errors.phone}</p>}
 
           {/* Date */}
-          <label className="block text-sm font-medium mt-3">Date</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Date</label>
           <input
             type="date"
             name="date"
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             onChange={formik.handleChange}
             value={formik.values.date}
           />
           {formik.errors.date && <p className="text-red-500 text-xs">{formik.errors.date}</p>}
 
           {/* Address */}
-          <label className="block text-sm font-medium mt-3">Address</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Address</label>
           <input
             type="text"
             name="address"
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             onChange={formik.handleChange}
             value={formik.values.address}
           />
           {formik.errors.address && <p className="text-red-500 text-xs">{formik.errors.address}</p>}
 
           {/* Requirement */}
-          <label className="block text-sm font-medium mt-3">Requirement</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Requirement</label>
           <textarea
             name="requirement"
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
             onChange={formik.handleChange}
             value={formik.values.requirement}
           />
           {formik.errors.requirement && <p className="text-red-500 text-xs">{formik.errors.requirement}</p>}
 
           {/* Submit Button */}
-          <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded mt-4 hover:bg-blue-600">
+          <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded mt-4 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600">
             Submit
           </button>
         </form>
 
         {/* Close Button */}
-        <button onClick={onClose} className="w-full text-gray-600 mt-2 hover:text-gray-800">
+        <button onClick={onClose} className="w-full text-gray-600 mt-2 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
           Cancel
         </button>
       </div>

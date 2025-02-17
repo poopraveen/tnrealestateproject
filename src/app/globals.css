@@ -88,3 +88,22 @@ footer {
   background-color: #f5f5dc; /* Light beige background */
 }
 
+.light {
+  background-color: #f3f4f6; /* Light mode background */
+  color: #000;
+}
+
+.dark {
+  background-color: #111827; /* Dark mode background */
+  color: #fff;
+}
+
+/* Ensure background applies properly to all containers */
+.bg-light {
+  background-color: white; 
+}
+
+.bg-dark {
+  background-color: #1f2937;
+}
+

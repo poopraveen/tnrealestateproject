@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { FaBell } from 'react-icons/fa'; // For the notification bell icon
+import ThemeToggle from './ToggleButton'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,6 +69,9 @@ const Header = () => {
               </li>
               <li>
                 <Link href="/profile">Profile</Link>
+              </li>
+              <li>
+              <ThemeToggle />
               </li>
             </ul>
           </div>

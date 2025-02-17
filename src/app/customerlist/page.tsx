@@ -19,21 +19,21 @@ const customers: Customer[] = [
 
 const CustomerList: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-4">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-semibold">Customer Information</h1>
+        <h1 className="text-xl font-semibold text-black dark:text-white">Customer Information</h1>
         <button className="bg-brown-700 text-white px-4 py-2 rounded flex items-center gap-2">
           <FaPlus /> Add
         </button>
       </div>
       <div className="mb-4">
-        <Input placeholder="Search customers..." className="w-full p-2 border rounded" />
+        <Input placeholder="Search customers..." className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
       </div>
       <div className="space-y-4">
         {customers.map((customer, index) => (
           <div
             key={index}
-            className="flex items-center bg-white p-4 rounded-lg shadow-md"
+            className="flex items-center bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md dark:border-gray-600"
           >
             <img
               src={customer.image}
@@ -41,10 +41,10 @@ const CustomerList: React.FC = () => {
               className="w-12 h-12 rounded-full object-cover"
             />
             <div className="ml-4 flex-1">
-              <h2 className="text-lg font-medium">{customer.name}</h2>
-              <p className="text-gray-500">Advance Amount: ${customer.advanceAmount}</p>
+              <h2 className="text-lg font-medium text-black dark:text-white">{customer.name}</h2>
+              <p className="text-gray-500 dark:text-gray-300">Advance Amount: ${customer.advanceAmount}</p>
             </div>
-            <FiEdit2 className="text-gray-400 cursor-pointer" />
+            <FiEdit2 className="text-gray-400 dark:text-gray-300 cursor-pointer" />
           </div>
         ))}
       </div>

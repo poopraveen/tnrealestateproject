@@ -4,6 +4,7 @@ import { ReduxProvider } from "../store/provider";
 import "./globals.css";
 import Footer from '../app/components/Footer'
 import Header from '../app/components/Header'
+import { ThemeProvider } from "./ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +29,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased chocolate-cream`}>
-        <ReduxProvider>
-          <Header />
-          <main className="flex-1 pb-20"> {/* Ensure main content has bottom padding */}
-            {children}
-          </main>
-          <Footer />
-        </ReduxProvider>
+        <ThemeProvider>
+          <ReduxProvider>
+            <Header />
+            <main className="flex-1 pb-20"> {/* Ensure main content has bottom padding */}
+              {children}
+            </main>
+            <Footer />
+          </ReduxProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

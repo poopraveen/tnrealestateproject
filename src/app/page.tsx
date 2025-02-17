@@ -222,10 +222,13 @@ import { RootState, AppDispatch } from "../store/store";
 import { fetchPieData, fetchBarData, fetchProjectData } from "../store/slices/dataSlice";
 import { PieChart, Pie, Cell, Legend, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import Carousel from "./components/carousel";
+import ThemeToggle from "./components/ToggleButton";
+import { useTheme } from "./ThemeContext";
 
 const HomeScreen: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const { theme } = useTheme();
 
   useEffect(() => {
     dispatch(fetchPieData());
@@ -244,13 +247,17 @@ const HomeScreen: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen p-4 bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold">SM NAGAR</h1>
-        <p className="text-gray-600">ABCD PROMOTERS</p>
+        <p className="text-gray-600 dark:text-gray-400">ABCD PROMOTERS</p>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div className="flex justify-end mb-4">
+        <ThemeToggle />
+      </div>
+
+      <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
         <h2 className="text-lg font-semibold">Plot Summary</h2>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
@@ -264,7 +271,7 @@ const HomeScreen: React.FC = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
         <h2 className="text-lg font-semibold">Plots per Project</h2>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={barData}>
@@ -279,28 +286,28 @@ const HomeScreen: React.FC = () => {
         </ResponsiveContainer>
       </div>
 
-      <div onClick={() => router.push("/leadmanagement")} className="bg-white p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer">
+      <div onClick={() => router.push("/leadmanagement")} className="p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer bg-white dark:bg-gray-800">
         <img src="/images/lead_generation.jpg" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
         <div className="ml-4">
           <h2 className="text-lg font-semibold">Lead Generation</h2>
-          <p className="text-gray-500">Updated daily</p>
+          <p className="text-gray-500 dark:text-gray-400">Updated daily</p>
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
         <h2 className="text-lg font-semibold">Lead Generation Trends</h2>
         <p className="text-2xl font-bold">250 leads</p>
         <p className="text-green-500">Last 30 days +12%</p>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
+      <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
         <h2 className="text-lg font-semibold">Projects</h2>
         <Carousel>
           {projectData.map((project, index) => (
             <div key={index} className="p-2">
               <img src={project.image} alt={project.title} className="w-full h-32 object-cover rounded-lg" />
               <h3 className="text-md font-semibold mt-2">{project.title}</h3>
-              <p className="text-sm text-gray-500">{project.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
             </div>
           ))}
         </Carousel>

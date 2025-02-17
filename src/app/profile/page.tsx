@@ -127,7 +127,7 @@ const RealEstateForm: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 dark:bg-gray-900 dark:text-white">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -136,172 +136,136 @@ const RealEstateForm: React.FC = () => {
         {({ values, handleChange, handleBlur, touched, errors }) => (
           <Form>
             {/* Personal Details */}
-            <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-              <h3 className="text-2xl font-semibold mb-4">Personal Details</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Personal Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
                   <Field
-                    id="firstName"
                     type="text"
                     name="personalDetails.firstName"
                     placeholder="First Name"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                   {touched.personalDetails?.firstName && errors.personalDetails?.firstName && (
                     <div className="text-red-500">{errors.personalDetails.firstName}</div>
                   )}
                 </div>
                 <div>
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
                   <Field
-                    id="lastName"
                     type="text"
                     name="personalDetails.lastName"
                     placeholder="Last Name"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                   {touched.personalDetails?.lastName && errors.personalDetails?.lastName && (
                     <div className="text-red-500">{errors.personalDetails.lastName}</div>
                   )}
                 </div>
               </div>
-              <div>
-                <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of Birth</label>
-                <Field
-                  id="dob"
-                  type="date"
-                  name="personalDetails.dob"
-                  className="input mt-4"
-                />
-              </div>
-              <div>
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
-                <Field as="select" id="gender" name="personalDetails.gender" className="input mt-4">
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </Field>
-              </div>
+              <Field
+                type="date"
+                name="personalDetails.dob"
+                className="input dark:bg-gray-700 dark:text-white mt-4"
+              />
+              <Field as="select" name="personalDetails.gender" className="input dark:bg-gray-700 dark:text-white mt-4">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </Field>
             </div>
 
             {/* Contact Details */}
-            <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-              <h3 className="text-2xl font-semibold mb-4">Contact Details</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Contact Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
                   <Field
-                    id="phone"
                     type="text"
                     name="contactDetails.phone"
                     placeholder="Phone"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                   <Field
-                    id="email"
                     type="email"
                     name="contactDetails.email"
                     placeholder="Email"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
-              <div>
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
-                <Field
-                  id="address"
-                  type="text"
-                  name="contactDetails.address"
-                  placeholder="Address"
-                  className="input mt-4"
-                />
-              </div>
-              <div>
-                <label htmlFor="preferredContact" className="block text-sm font-medium text-gray-700">Preferred Contact Method</label>
-                <Field as="select" id="preferredContact" name="contactDetails.preferredContact" className="input mt-4">
-                  <option value="">Select Preferred Contact Method</option>
-                  <option value="Phone">Phone</option>
-                  <option value="Email">Email</option>
-                  <option value="Text">Text</option>
-                </Field>
-              </div>
+              <Field
+                type="text"
+                name="contactDetails.address"
+                placeholder="Address"
+                className="input dark:bg-gray-700 dark:text-white mt-4"
+              />
+              <Field as="select" name="contactDetails.preferredContact" className="input dark:bg-gray-700 dark:text-white mt-4">
+                <option value="">Select Preferred Contact Method</option>
+                <option value="Phone">Phone</option>
+                <option value="Email">Email</option>
+                <option value="Text">Text</option>
+              </Field>
             </div>
 
             {/* Property Preferences */}
-            <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-              <h3 className="text-2xl font-semibold mb-4">Property Preferences</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Property Preferences</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="type" className="block text-sm font-medium text-gray-700">Property Type</label>
                   <Field
-                    id="type"
                     type="text"
                     name="propertyPreferences.type"
                     placeholder="Property Type"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label htmlFor="budgetMin" className="block text-sm font-medium text-gray-700">Min Budget</label>
                   <Field
-                    id="budgetMin"
                     type="number"
                     name="propertyPreferences.budgetMin"
                     placeholder="Min Budget"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label htmlFor="budgetMax" className="block text-sm font-medium text-gray-700">Max Budget</label>
                   <Field
-                    id="budgetMax"
                     type="number"
                     name="propertyPreferences.budgetMax"
                     placeholder="Max Budget"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label htmlFor="location" className="block text-sm font-medium text-gray-700">Preferred Location</label>
                   <Field
-                    id="location"
                     type="text"
                     name="propertyPreferences.location"
                     placeholder="Preferred Location"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
-              <div>
-                <label htmlFor="desiredFeatures" className="block text-sm font-medium text-gray-700">Desired Features</label>
-                <Field
-                  id="desiredFeatures"
-                  type="text"
-                  name="propertyPreferences.desiredFeatures"
-                  placeholder="Desired Features"
-                  className="input mt-4"
-                />
-              </div>
+              <Field
+                type="text"
+                name="propertyPreferences.desiredFeatures"
+                placeholder="Desired Features"
+                className="input dark:bg-gray-700 dark:text-white mt-4"
+              />
             </div>
 
             {/* Financial Information */}
-            <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
-              <h3 className="text-2xl font-semibold mb-4">Financial Information</h3>
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Financial Information</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="employmentStatus" className="block text-sm font-medium text-gray-700">Employment Status</label>
                   <Field
                     as="select"
-                    id="employmentStatus"
                     name="financialDetails.employmentStatus"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   >
                     <option value="">Select Employment Status</option>
                     <option value="Employed">Employed</option>
@@ -310,35 +274,29 @@ const RealEstateForm: React.FC = () => {
                   </Field>
                 </div>
                 <div>
-                  <label htmlFor="income" className="block text-sm font-medium text-gray-700">Annual Income</label>
                   <Field
-                    id="income"
                     type="number"
                     name="financialDetails.income"
                     placeholder="Annual Income"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label htmlFor="downPayment" className="block text-sm font-medium text-gray-700">Down Payment</label>
                   <Field
-                    id="downPayment"
                     type="number"
                     name="financialDetails.downPayment"
                     placeholder="Down Payment"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
                 <div>
-                  <label htmlFor="creditScore" className="block text-sm font-medium text-gray-700">Credit Score</label>
                   <Field
-                    id="creditScore"
                     type="number"
                     name="financialDetails.creditScore"
                     placeholder="Credit Score"
-                    className="input"
+                    className="input dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
@@ -348,7 +306,7 @@ const RealEstateForm: React.FC = () => {
             <div className="flex justify-center mt-4">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-blue-700 dark:hover:bg-blue-800"
               >
                 Submit
               </button>

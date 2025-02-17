@@ -34,19 +34,19 @@ const PlotDetailsForm = () => {
   });
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-gray-50 shadow-md rounded-lg">
-      <h2 className="text-xl font-semibold text-center mb-4">Plot Details</h2>
+    <div className="max-w-lg mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+      <h2 className="text-xl font-semibold text-center mb-4 text-black dark:text-white">Plot Details</h2>
       <form onSubmit={formik.handleSubmit} className="space-y-4">
 
         {/* Plot Name & Plot Number Card */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Basic Information</h3>
+        <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2 text-black dark:text-white">Basic Information</h3>
           <div>
-            <label className="block font-medium">Plot Name</label>
+            <label className="block font-medium text-black dark:text-white">Plot Name</label>
             <input
               type="text"
               placeholder="Enter Plot Name"
-              className="w-full border p-2 rounded-md"
+              className="w-full border dark:bg-gray-600 p-2 rounded-md text-black dark:text-white"
               value={formik.values.plotName}
               onChange={formik.handleChange}
               name="plotName"
@@ -56,11 +56,11 @@ const PlotDetailsForm = () => {
             )}
           </div>
           <div className="mt-2">
-            <label className="block font-medium">Plot Number</label>
+            <label className="block font-medium text-black dark:text-white">Plot Number</label>
             <input
               type="text"
               placeholder="Enter Plot Number"
-              className="w-full border p-2 rounded-md"
+              className="w-full border dark:bg-gray-600 p-2 rounded-md text-black dark:text-white"
               value={formik.values.plotNumber}
               onChange={formik.handleChange}
               name="plotNumber"
@@ -72,16 +72,16 @@ const PlotDetailsForm = () => {
         </div>
 
         {/* Plot Boundary Information Card */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Boundary Information</h3>
+        <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2 text-black dark:text-white">Boundary Information</h3>
           {(["North", "South", "East", "West"] as const).map((direction) => (
             <div key={direction} className="mt-2">
-              <label className="block font-medium">Boundary ({direction})</label>
+              <label className="block font-medium text-black dark:text-white">Boundary ({direction})</label>
               <input
                 type="text"
                 name={`plotBoundary${direction}`}
                 placeholder="Enter Boundary"
-                className="w-full border p-2 rounded-md"
+                className="w-full border dark:bg-gray-600 p-2 rounded-md text-black dark:text-white"
                 value={(formik.values[`plotBoundary${direction}` as keyof typeof formik.values] as string) || ""}
                 onChange={formik.handleChange}
               />
@@ -96,11 +96,11 @@ const PlotDetailsForm = () => {
         </div>
 
         {/* Plot Facing Information Card */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Facing Information</h3>
+        <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2 text-black dark:text-white">Facing Information</h3>
           {(["North", "South", "East", "West"] as const).map((direction) => (
             <div key={direction} className="flex items-center justify-between mt-2">
-              <span>Facing ({direction})</span>
+              <span className="text-black dark:text-white">Facing ({direction})</span>
               <input
                 type="checkbox"
                 name={`plotFacing${direction}`}
@@ -113,10 +113,10 @@ const PlotDetailsForm = () => {
         </div>
 
         {/* Plot Corner Information Card */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Corner Plot Information</h3>
+        <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2 text-black dark:text-white">Corner Plot Information</h3>
           <div className="flex items-center justify-between">
-            <span>Corner Plot</span>
+            <span className="text-black dark:text-white">Corner Plot</span>
             <input
               type="checkbox"
               name="plotCorner"
@@ -128,11 +128,11 @@ const PlotDetailsForm = () => {
         </div>
 
         {/* Plot Status Dropdown */}
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Status</h3>
+        <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold mb-2 text-black dark:text-white">Status</h3>
           <select
             name="plotStatus"
-            className="w-full border p-2 rounded-md"
+            className="w-full border dark:bg-gray-600 p-2 rounded-md text-black dark:text-white"
             value={formik.values.plotStatus}
             onChange={formik.handleChange}
           >
@@ -144,7 +144,7 @@ const PlotDetailsForm = () => {
 
         {/* Buttons */}
         <div className="flex justify-between mt-4">
-          <button type="button" className="bg-gray-300 px-4 py-2 rounded-md">
+          <button type="button" className="bg-gray-300 dark:bg-gray-600 text-black dark:text-white px-4 py-2 rounded-md">
             Cancel
           </button>
           <button
