@@ -324,13 +324,13 @@ const RealEstateForm: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <h4>Form Values:</h4>
               <pre>{JSON.stringify(values, null, 2)}</pre>
 
               <h4>Form Errors:</h4>
               <pre>{JSON.stringify(errors, null, 2)}</pre>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <div className="flex justify-center mt-4">

@@ -1,4 +1,6 @@
+'use client'
 import React from "react";
+import Link from 'next/link';
 import { FiEdit2 } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa";
 import { Input } from "../components/ui/input";
@@ -23,7 +25,7 @@ const CustomerList: React.FC = () => {
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-xl font-semibold text-black dark:text-white">Customer Information</h1>
         <button className="bg-brown-700 text-white px-4 py-2 rounded flex items-center gap-2">
-          <FaPlus /> Add
+        <Link href="/profile" className="text-xl"> <FaPlus /> Add </Link>
         </button>
       </div>
       <div className="mb-4">
