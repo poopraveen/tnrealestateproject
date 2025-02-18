@@ -1,6 +1,11 @@
 'use client'
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { useDispatch } from "react-redux";
+import { pdf } from '@react-pdf/renderer';
+import SaleDeed from './SaleDeedComponent';
+import { RootState, AppDispatch } from "../../store/store";
+import { postProfileData } from '../../store/slices/profileSlice'; // Import the postProfileData action
 import * as Yup from 'yup';
 
 // Define the types for the form values
@@ -89,42 +94,59 @@ const validationSchema = Yup.object({
     dob: Yup.date().required('Date of birth is required'),
     gender: Yup.string().required('Gender is required'),
   }),
-  contactDetails: Yup.object({
-    phone: Yup.string().required('Phone number is required'),
-    email: Yup.string().email('Invalid email format').required('Email is required'),
-    address: Yup.string().required('Address is required'),
-    preferredContact: Yup.string().required('Preferred contact method is required'),
-  }),
-  propertyPreferences: Yup.object({
-    type: Yup.string().required('Property type is required'),
-    budgetMin: Yup.number().required('Minimum budget is required'),
-    budgetMax: Yup.number().required('Maximum budget is required'),
-    location: Yup.string().required('Preferred location is required'),
-    desiredFeatures: Yup.string(),
-  }),
-  financialDetails: Yup.object({
-    employmentStatus: Yup.string().required('Employment status is required'),
-    income: Yup.number().required('Annual income is required'),
-    downPayment: Yup.number().required('Down payment amount is required'),
-    creditScore: Yup.number().required('Credit score is required'),
-  }),
-  propertyHistory: Yup.object({
-    currentHousing: Yup.string().required('Current housing status is required'),
-    reasonForMoving: Yup.string().required('Reason for moving is required'),
-    previousAgent: Yup.string(),
-  }),
-  additionalInfo: Yup.object({
-    referralSource: Yup.string(),
-    marketingConsent: Yup.bool(),
-  }),
-  termsAgreement: Yup.bool().oneOf([true], 'You must agree to the terms'),
+  // contactDetails: Yup.object({
+  //   phone: Yup.string().required('Phone number is required'),
+  //   email: Yup.string().email('Invalid email format').required('Email is required'),
+  //   address: Yup.string().required('Address is required'),
+  //   preferredContact: Yup.string().required('Preferred contact method is required'),
+  // }),
+  // propertyPreferences: Yup.object({
+  //   type: Yup.string().required('Property type is required'),
+  //   budgetMin: Yup.number().required('Minimum budget is required'),
+  //   budgetMax: Yup.number().required('Maximum budget is required'),
+  //   location: Yup.string().required('Preferred location is required'),
+  //   desiredFeatures: Yup.string(),
+  // }),
+  // financialDetails: Yup.object({
+  //   employmentStatus: Yup.string().required('Employment status is required'),
+  //   income: Yup.number().required('Annual income is required'),
+  //   downPayment: Yup.number().required('Down payment amount is required'),
+  //   creditScore: Yup.number().required('Credit score is required'),
+  // }),
+  // propertyHistory: Yup.object({
+  //   currentHousing: Yup.string().required('Current housing status is required'),
+  //   reasonForMoving: Yup.string().required('Reason for moving is required'),
+  //   previousAgent: Yup.string(),
+  // }),
+  // additionalInfo: Yup.object({
+  //   referralSource: Yup.string(),
+  //   marketingConsent: Yup.bool(),
+  // }),
+  // termsAgreement: Yup.bool().oneOf([true], 'You must agree to the terms'),
 });
 
 const RealEstateForm: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log('Form values:', values);
     actions.setSubmitting(false);
+    dispatch(postProfileData(values));
+    generatePdfUrl(values)
   };
+  const generatePdfUrl = (profileData: any) => {
+    // Create the URL for the generated PDF and open it in a new tab
+    pdf(<SaleDeed data={profileData} />)
+      .toBlob()
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      })
+      .catch((error) => {
+        console.error('Failed to generate PDF:', error);
+      });
+  };
+
+  
 
   return (
     <div className="container mx-auto p-6 dark:bg-gray-900 dark:text-white">
@@ -300,6 +322,14 @@ const RealEstateForm: React.FC = () => {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="mt-4">
+              <h4>Form Values:</h4>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+
+              <h4>Form Errors:</h4>
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
             </div>
 
             {/* Submit Button */}
