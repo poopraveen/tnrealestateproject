@@ -305,7 +305,7 @@ const HomeScreen: React.FC = () => {
         <Carousel>
           {projectData.map((project, index) => (
             <div key={index} className="p-2">
-              <img src={project.image} alt={project.title} className="w-full h-32 object-cover rounded-lg" />
+              <img src={"/icons/web-app-manifest-192x192.png"} alt={project.title} className="w-full h-32 object-cover rounded-lg" />
               <h3 className="text-md font-semibold mt-2">{project.title}</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
             </div>
