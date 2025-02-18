@@ -10,11 +10,11 @@ interface Customer {
 }
 
 const customers: Customer[] = [
-  { name: "John Smith", advanceAmount: 5000, image: "/images/john.jpg" },
-  { name: "Emily Johnson", advanceAmount: 3000, image: "/images/emily.jpg" },
-  { name: "Michael Brown", advanceAmount: 7000, image: "/images/michael.jpg" },
-  { name: "Sophia Davis", advanceAmount: 4000, image: "/images/sophia.jpg" },
-  { name: "James Wilson", advanceAmount: 6000, image: "/images/james.jpg" },
+  { name: "John Smith", advanceAmount: 5000, image: "/icons/web-app-manifest-192x192.png" },
+  { name: "Emily Johnson", advanceAmount: 3000, image: "/icons/web-app-manifest-192x192.png" },
+  { name: "Michael Brown", advanceAmount: 7000, image: "/icons/web-app-manifest-192x192.png" },
+  { name: "Sophia Davis", advanceAmount: 4000, image: "/icons/web-app-manifest-192x192.png" },
+  { name: "James Wilson", advanceAmount: 6000, image: "/icons/web-app-manifest-192x192.png" },
 ];
 
 const CustomerList: React.FC = () => {
