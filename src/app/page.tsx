@@ -287,7 +287,7 @@ const HomeScreen: React.FC = () => {
       </div>
 
       <div onClick={() => router.push("/leadmanagement")} className="p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer bg-white dark:bg-gray-800">
-        <img src="/images/lead_generation.jpg" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
+        <img src="/icons/web-app-manifest-512x512.png" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
         <div className="ml-4">
           <h2 className="text-lg font-semibold">Lead Generation</h2>
           <p className="text-gray-500 dark:text-gray-400">Updated daily</p>
