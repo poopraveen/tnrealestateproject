@@ -129,10 +129,10 @@ const RealEstateForm: React.FC = () => {
 const [image, setImage] = useState(null);  // State to hold the uploaded image
 
   // Handle the image file selection
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: any) => {
+    const file: any = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      const reader: any = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result); // Store image as base64
       };
