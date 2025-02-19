@@ -1,13 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./slices/dataSlice";
-import profileReducer, { uploadImage } from './slices/profileSlice';
+// store.ts
+import { configureStore } from '@reduxjs/toolkit';
+import dataReducer from './slices/dataSlice';
+import profileReducer from './slices/profileSlice';
+
 export const store = configureStore({
   reducer: {
     data: dataReducer,
-    profile: profileReducer
+    profile: profileReducer,
   },
-middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(uploadImage.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
