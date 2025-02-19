@@ -130,7 +130,7 @@ const RealEstateForm: React.FC = () => {
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log('Form values:', values);
     actions.setSubmitting(false);
-    dispatch(postProfileData(values));
+    dispatch(postProfileData({data: values}));
     generatePdfUrl(values)
   };
   const generatePdfUrl = (profileData: any) => {
