@@ -8,7 +8,6 @@ export const store = configureStore({
   },
 middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(uploadImage.middleware),
-},
 });
 
 export type RootState = ReturnType<typeof store.getState>;
