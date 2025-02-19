@@ -17,7 +17,7 @@ export const uploadImage = createAsyncThunk(
       }
 
       return await response.json();
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
