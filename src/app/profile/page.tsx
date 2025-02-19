@@ -1,13 +1,14 @@
 'use client'
 import React, { useState } from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { pdf } from '@react-pdf/renderer';
 import SaleDeed from './SaleDeedComponent';
 import { RootState, AppDispatch } from "../../store/store";
-import { postProfileData, uploadImage } from '../../store/slices/profileSlice'; 
+import { postProfileData, uploadImage } from '../../store/slices/profileSlice'; // Import the postProfileData action
 import * as Yup from 'yup';
 
+// Define the types for the form values
 interface FormValues {
   personalDetails: {
     firstName: string;
@@ -46,6 +47,7 @@ interface FormValues {
   termsAgreement: boolean;
 }
 
+// Initial form values
 const initialValues: FormValues = {
   personalDetails: {
     firstName: '',
@@ -84,6 +86,7 @@ const initialValues: FormValues = {
   termsAgreement: false,
 };
 
+// Validation schema with Yup
 const validationSchema = Yup.object({
   personalDetails: Yup.object({
     firstName: Yup.string().required('First name is required'),
@@ -91,45 +94,39 @@ const validationSchema = Yup.object({
     dob: Yup.date().required('Date of birth is required'),
     gender: Yup.string().required('Gender is required'),
   }),
-  // Add validation for other sections as needed
 });
 
 const RealEstateForm: React.FC = () => {
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null); // State to hold the uploaded image
   const dispatch = useDispatch<AppDispatch>();
 
+  // Handle the image file selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
+    const file = e.target.files?.[0];
     if (file) {
-      if (!file.type.startsWith('image/')) {
-        alert('Please upload a valid image file');
-        return;
-      }
-
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string);
+        setImage(reader.result as string); // Store image as base64
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Read the file as base64
+    }
+  };
+
+  const handleSubmitupload = () => {
+    if (image) {
+      dispatch(uploadImage(image)); // Dispatch uploadImage action to Redux
     }
   };
 
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
+    console.log('Form values:', values);
     actions.setSubmitting(false);
-
-    // Handle image upload if there's an image
-    if (image) {
-      dispatch(uploadImage(image)); // Upload the image
-    }
-
-    // Submit form data to Redux store
-    dispatch(postProfileData({ data: values }));
-
-    // Generate PDF with the submitted data
+    dispatch(postProfileData({ data: values })); // Dispatch postProfileData action
     generatePdfUrl(values);
   };
 
   const generatePdfUrl = (profileData: any) => {
+    // Create the URL for the generated PDF and open it in a new tab
     pdf(<SaleDeed data={profileData} />)
       .toBlob()
       .then((blob) => {
@@ -150,6 +147,7 @@ const RealEstateForm: React.FC = () => {
       >
         {({ values, handleChange, handleBlur, touched, errors }) => (
           <Form>
+            {/* Personal Details */}
             <div className="mb-6">
               <label
                 htmlFor="fileInput"
@@ -171,10 +169,18 @@ const RealEstateForm: React.FC = () => {
                     alt="Uploaded Profile"
                     className="w-32 h-32 object-cover rounded-full"
                   />
+                  <button
+                    type="button"
+                    onClick={handleSubmitupload}
+                    className="mt-2 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
+                  >
+                    Upload
+                  </button>
                 </div>
               )}
             </div>
 
+            {/* Personal Details */}
             <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Personal Details</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -201,8 +207,154 @@ const RealEstateForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Additional sections for contact details, property preferences, etc. */}
+            <Field
+              type="date"
+              name="personalDetails.dob"
+              className="input dark:bg-gray-700 dark:text-white mt-4"
+            />
+            <Field as="select" name="personalDetails.gender" className="input dark:bg-gray-700 dark:text-white mt-4">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </Field>
 
+             {/* Contact Details */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Contact Details</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Field
+                    type="text"
+                    name="contactDetails.phone"
+                    placeholder="Phone"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <Field
+                    type="email"
+                    name="contactDetails.email"
+                    placeholder="Email"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+              <Field
+                type="text"
+                name="contactDetails.address"
+                placeholder="Address"
+                className="input dark:bg-gray-700 dark:text-white mt-4"
+              />
+              <Field as="select" name="contactDetails.preferredContact" className="input dark:bg-gray-700 dark:text-white mt-4">
+                <option value="">Select Preferred Contact Method</option>
+                <option value="Phone">Phone</option>
+                <option value="Email">Email</option>
+                <option value="Text">Text</option>
+              </Field>
+            </div>
+
+            {/* Property Preferences */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Property Preferences</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Field
+                    type="text"
+                    name="propertyPreferences.type"
+                    placeholder="Property Type"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <Field
+                    type="number"
+                    name="propertyPreferences.budgetMin"
+                    placeholder="Min Budget"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                  <Field
+                    type="number"
+                    name="propertyPreferences.budgetMax"
+                    placeholder="Max Budget"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <Field
+                    type="text"
+                    name="propertyPreferences.location"
+                    placeholder="Preferred Location"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+              <Field
+                type="text"
+                name="propertyPreferences.desiredFeatures"
+                placeholder="Desired Features"
+                className="input dark:bg-gray-700 dark:text-white mt-4"
+              />
+            </div>
+
+            {/* Financial Information */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Financial Information</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Field
+                    as="select"
+                    name="financialDetails.employmentStatus"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="">Select Employment Status</option>
+                    <option value="Employed">Employed</option>
+                    <option value="Self-Employed">Self-Employed</option>
+                    <option value="Unemployed">Unemployed</option>
+                  </Field>
+                </div>
+                <div>
+                  <Field
+                    type="number"
+                    name="financialDetails.income"
+                    placeholder="Annual Income"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                  <Field
+                    type="number"
+                    name="financialDetails.downPayment"
+                    placeholder="Down Payment"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+                <div>
+                  <Field
+                    type="number"
+                    name="financialDetails.creditScore"
+                    placeholder="Credit Score"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="mt-4">
+              <h4>Form Values:</h4>
+              <pre>{JSON.stringify(values, null, 2)}</pre>
+
+              <h4>Form Errors:</h4>
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
+            </div> */}
+
+            {/* Submit Button */}
             <div className="flex justify-center mt-4">
               <button
                 type="submit"
