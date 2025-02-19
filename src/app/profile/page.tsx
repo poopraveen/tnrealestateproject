@@ -176,36 +176,36 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
         {({ values, handleChange, handleBlur, touched, errors }) => (
           <Form>
             {/* Personal Details */}
-            <div className="mb-6">
-      <label
-        htmlFor="fileInput"
-        className="text-xl font-semibold text-gray-900 dark:text-white cursor-pointer"
-      >
-        Upload Profile Photo
-      </label>
-      <input
-        type="file"
-        id="fileInput"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="hidden"
-      />
-      {image && (
-        <div className="mt-4">
-          <img
-            src={image}
-            alt="Uploaded Profile"
-            className="w-32 h-32 object-cover rounded-full"
-          />
-          <button
-            onClick={handleUpload}
-            className="mt-2 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
-          >
-            Upload
-          </button>
-        </div>
-      )}
-    </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="fileInput"
+                  className="text-xl font-semibold text-gray-900 dark:text-white cursor-pointer"
+                >
+                  Upload Profile Photo
+                </label>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                {image && (
+                  <div className="mt-4">
+                    <img
+                      src={image}
+                      alt="Uploaded Profile"
+                      className="w-32 h-32 object-cover rounded-full"
+                    />
+                    <button
+                      onClick={handleUpload}
+                      className="mt-2 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
+                    >
+                      Upload
+                    </button>
+                  </div>
+                )}
+            </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Personal Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
