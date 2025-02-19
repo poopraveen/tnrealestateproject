@@ -9,7 +9,7 @@ export const uploadImage = createAsyncThunk(
 
       const response = await fetch('https://real-pro-service.onrender.com/api/file/upload', {
         method: 'POST',
-        body: {file: formData},
+        body: formData,
       });
 
       if (!response.ok) {
