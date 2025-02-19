@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { pdf } from '@react-pdf/renderer';
 import SaleDeed from './SaleDeedComponent';
 import { RootState, AppDispatch } from "../../store/store";
-import { postProfileData } from '../../store/slices/profileSlice'; // Import the postProfileData action
+import { postProfileData, uploadImage  } from '../../store/slices/profileSlice'; // Import the postProfileData action
 import * as Yup from 'yup';
 
 // Define the types for the form values
@@ -139,6 +139,11 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
       reader.readAsDataURL(file); // Read the file as base64
     }
   };
+ const handleSubmit: any = () => {
+    if (image) {
+      dispatch(uploadImage(image));
+    }
+  };
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log('Form values:', values);
@@ -185,6 +190,11 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
         {image && (
           <div className="mt-4">
             <img src={image} alt="Uploaded Profile" className="w-32 h-32 object-cover rounded-full" />
+          </div>
+        )}
+       {image && (
+          <div className="mt-4">
+            <button onClick={handleSubmit} src={image} alt="Uploaded Profile" className="w-32 h-32 object-cover rounded-full" />
           </div>
         )}
       </div>
