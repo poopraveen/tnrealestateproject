@@ -7,10 +7,11 @@ export const store = configureStore({
     data: dataReducer,
     profile: profileReducer
   },
-}
 middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(uploadImage.middleware),
-});
+},
+}
+);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
