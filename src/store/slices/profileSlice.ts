@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export const postProfileData = createAsyncThunk(
   'profile/postProfileData',
-  async (profileData: Profile, { rejectWithValue }) => {
+  async (profileData: any, { rejectWithValue }) => {
     try {
       // Assuming you are using fetch to post the data
       const response = await fetch('https://real-pro-service.onrender.com/api/leads', {
