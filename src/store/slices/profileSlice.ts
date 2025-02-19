@@ -5,9 +5,9 @@ export const uploadImage = createAsyncThunk(
   async (imageData: any, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      formData.append('image', imageData);
+      formData.append('file', imageData);
 
-      const response = await fetch('https://real-pro-service.onrender.com/api/upload', {
+      const response = await fetch('https://real-pro-service.onrender.com/api/file/upload', {
         method: 'POST',
         body: formData,
       });
