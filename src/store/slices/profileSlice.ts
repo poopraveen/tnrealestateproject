@@ -2,11 +2,25 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export const uploadImage = createAsyncThunk(
   'profile/uploadImage',
-  async (file: any, { rejectWithValue }) => {
+  async (base64String: string, { rejectWithValue }) => {
     try {
-      const formData = new FormData();
-      formData.append('file', file, file.name);
+      // Convert Base64 to Blob
+      const byteCharacters = atob(base64String.split(',')[1]); // Remove header (data:image/png;base64,...)
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      
+      // Extract file type from Base64 string
+      const mimeType = base64String.match(/^data:(.*?);base64,/)?.[1] || 'image/png';
+      const fileBlob = new Blob([byteArray], { type: mimeType });
 
+      // Create FormData and append Blob
+      const formData = new FormData();
+      formData.append('file', fileBlob, `image.${mimeType.split('/')[1]}`);
+
+      // Upload
       const response = await fetch('https://real-pro-service.onrender.com/api/file/upload', {
         method: 'POST',
         body: formData,
@@ -22,6 +36,8 @@ export const uploadImage = createAsyncThunk(
     }
   }
 );
+
+
 export const postProfileData = createAsyncThunk(
   'profile/postProfileData',
   async (profileData: any, { rejectWithValue }) => {
