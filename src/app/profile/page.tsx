@@ -1,5 +1,5 @@
 'use client'
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useDispatch } from "react-redux";
 import { pdf } from '@react-pdf/renderer';
@@ -126,6 +126,19 @@ const validationSchema = Yup.object({
 });
 
 const RealEstateForm: React.FC = () => {
+const [image, setImage] = useState(null);  // State to hold the uploaded image
+
+  // Handle the image file selection
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result); // Store image as base64
+      };
+      reader.readAsDataURL(file); // Read the file as base64
+    }
+  };
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log('Form values:', values);
@@ -159,6 +172,22 @@ const RealEstateForm: React.FC = () => {
           <Form>
             {/* Personal Details */}
             <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              {/* Photo Upload Section */}
+      <div className="mb-6">
+        <label className="text-xl font-semibold text-gray-900 dark:text-white">Upload Profile Photo</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="mt-4 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
+        />
+        {/* Display Image Preview if exists */}
+        {image && (
+          <div className="mt-4">
+            <img src={image} alt="Uploaded Profile" className="w-32 h-32 object-cover rounded-full" />
+          </div>
+        )}
+      </div>
               <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Personal Details</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
