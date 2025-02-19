@@ -139,7 +139,7 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
       reader.readAsDataURL(file); // Read the file as base64
     }
   };
- const handleSubmit: any = () => {
+ const handleSubmitupload: any = () => {
     if (image) {
       dispatch(uploadImage(image));
     }
@@ -194,7 +194,7 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
         )}
        {image && (
           <div className="mt-4">
-            <button onClick={handleSubmit} src={image} alt="Uploaded Profile" className="w-32 h-32 object-cover rounded-full" />
+            <button onClick={handleSubmitupload} src={image} alt="Uploaded Profile" className="w-32 h-32 object-cover rounded-full" />
           </div>
         )}
       </div>
