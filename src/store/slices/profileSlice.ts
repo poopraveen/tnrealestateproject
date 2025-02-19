@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export const uploadImage = createAsyncThunk(
   'profile/uploadImage',
-  async (imageData: any, { rejectWithValue }) => {
+  async (file: any, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      formData.append('file', imageData);
+      formData.append('file', file);
 
       const response = await fetch('https://real-pro-service.onrender.com/api/file/upload', {
         method: 'POST',
