@@ -176,27 +176,20 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
         {({ values, handleChange, handleBlur, touched, errors }) => (
           <Form>
             {/* Personal Details */}
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
-              <div className="mb-6">
-      <label className="text-xl font-semibold text-gray-900 dark:text-white">
+            <div className="mb-6">
+      <label
+        htmlFor="fileInput"
+        className="text-xl font-semibold text-gray-900 dark:text-white cursor-pointer"
+      >
         Upload Profile Photo
       </label>
-      <div className="mt-4">
-        <button
-          type="button"
-          onClick={handleButtonClick}
-          className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
-        >
-          Choose File
-        </button>
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleImageChange}
-          className="hidden"
-        />
-      </div>
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+        onChange={handleImageChange}
+        className="hidden"
+      />
       {image && (
         <div className="mt-4">
           <img
@@ -204,13 +197,9 @@ const [image, setImage] = useState(null);  // State to hold the uploaded image
             alt="Uploaded Profile"
             className="w-32 h-32 object-cover rounded-full"
           />
-        </div>
-      )}
-      {image && (
-        <div className="mt-4">
           <button
             onClick={handleUpload}
-            className="w-full p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
+            className="mt-2 p-2 border border-gray-300 rounded-md dark:bg-gray-700 dark:text-white"
           >
             Upload
           </button>
