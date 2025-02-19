@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export const uploadImage = createAsyncThunk(
   'profile/uploadImage',
-  async (imageData, { rejectWithValue }) => {
+  async (imageData: any, { rejectWithValue }) => {
     try {
       const formData = new FormData();
       formData.append('image', imageData);
