@@ -100,8 +100,8 @@ const validationSchema = Yup.object({
       };
 
       const formValues = mapToFormValues(newLead);  // Map to FormValues format
-      console.log(formValues);  // Log the generated form values for debugging
-      dispatch(postProfileData(formValues)); // Post profile data if needed
+      console.log({data: formValues});  // Log the generated form values for debugging
+      dispatch(postProfileData({data: formValues})); // Post profile data if needed
 
       // ✅ Update Redux State (Append New Lead)
       dispatch(setLeads([...leads, newLead]));
