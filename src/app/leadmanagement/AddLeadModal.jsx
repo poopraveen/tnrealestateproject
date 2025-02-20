@@ -9,18 +9,10 @@ const AddLeadModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const leads = useSelector((state) => state.data.leads); // Get existing leads from Redux
   const generateRandomValue: any = () => {
-  const names = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
-  const phoneNumbers = [
-    "+1-234-567-8901", "+1-345-678-9012", "+1-456-789-0123", "+1-567-890-1234", "+1-678-901-2345"
-  ];
-  const addresses = [
-    "123 Elm St, Springfield, IL, 62701", 
-    "456 Oak St, Lincoln, NE, 68508", 
-    "789 Pine St, Madison, WI, 53703",
-    "321 Maple Ave, Boston, MA, 02115", 
-    "654 Birch Blvd, Austin, TX, 73301"
-  ];
-  const requirements = [
+  const names: any = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
+  const phoneNumbers: any = ["+1-234-567-8901", "+1-345-678-9012", "+1-456-789-0123", "+1-567-890-1234", "+1-678-901-2345"];
+  const addresses: any = ["123 Elm St, Springfield, IL, 62701","456 Oak St, Lincoln, NE, 68508", "789 Pine St, Madison, WI, 53703","321 Maple Ave, Boston, MA, 02115", "654 Birch Blvd, Austin, TX, 73301"];
+  const requirements: any = [
     "Urgent request for delivery", 
     "Looking for quick advice on a purchase", 
     "Interested in a service demo", 
