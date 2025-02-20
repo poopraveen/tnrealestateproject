@@ -10,86 +10,85 @@ const AddLeadModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const leads = useSelector((state) => state.data.leads); // Get existing leads from Redux
   const generateRandomValue = () => {
-    const names = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
-    const phoneNumbers = ["+1-234-567-8901", "+1-345-678-9012", "+1-456-789-0123", "+1-567-890-1234", "+1-678-901-2345"];
-    const addresses = [
-      "123 Elm St, Springfield, IL, 62701",
-      "456 Oak St, Lincoln, NE, 68508", 
-      "789 Pine St, Madison, WI, 53703",
-      "321 Maple Ave, Boston, MA, 02115", 
-      "654 Birch Blvd, Austin, TX, 73301"
-    ];
-    const requirements = [
-      "Urgent request for delivery", 
-      "Looking for quick advice on a purchase", 
-      "Interested in a service demo", 
-      "Scheduled appointment for consultation", 
-      "Order status inquiry"
-    ];
+  const names = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
+  const phoneNumbers = ["+1-234-567-8901", "+1-345-678-9012", "+1-456-789-0123", "+1-567-890-1234", "+1-678-901-2345"];
+  const addresses = [
+    "123 Elm St, Springfield, IL, 62701",
+    "456 Oak St, Lincoln, NE, 68508",
+    "789 Pine St, Madison, WI, 53703",
+    "321 Maple Ave, Boston, MA, 02115",
+    "654 Birch Blvd, Austin, TX, 73301"
+  ];
+  const requirements = [
+    "Urgent request for delivery", 
+    "Looking for quick advice on a purchase", 
+    "Interested in a service demo", 
+    "Scheduled appointment for consultation", 
+    "Order status inquiry"
+  ];
 
-    return {
-      name: names[Math.floor(Math.random() * names.length)],
-      phone: phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)],
-      date: new Date().toISOString().split("T")[0], // Current date
-      address: addresses[Math.floor(Math.random() * addresses.length)],
-      requirement: requirements[Math.floor(Math.random() * requirements.length)],
-    };
+  return {
+    name: names[Math.floor(Math.random() * names.length)],
+    phone: phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)],
+    date: new Date().toISOString().split("T")[0], // Current date
+    address: addresses[Math.floor(Math.random() * addresses.length)],
+    requirement: requirements[Math.floor(Math.random() * requirements.length)],
   };
+};
 
-  // Formik Validation Schema
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Full Name is required"),
-    phone: Yup.string().matches(/^\d+$/, "Phone number must be digits").required("Phone number is required"),
-    date: Yup.date().required("Date is required"),
-    address: Yup.string().required("Address is required"),
-    requirement: Yup.string().required("Requirement is required"),
-  });
-  
-const mapToFormValues = (formData: any) => {
-  // Construct the response structure based on the provided data and schema
+// Map to form values function
+const mapToFormValues = (formData) => {
   return {
     personalDetails: {
       firstName: formData.name.split(" ")[0],  // First part of name is the first name
       lastName: formData.name.split(" ")[1] || "",  // Second part of name is the last name (if available)
-      dob: "",  // Assuming we don't have a date of birth in the provided data, leaving it empty
-      gender: "",  // Assuming we don't have gender, leaving it empty
+      dob: "",  // Assuming no DOB in provided data
+      gender: "",  // Assuming no gender in provided data
     },
     contactDetails: {
       phone: formData.phone,
-      email: "",  // Assuming no email provided, leaving it empty
+      email: "",  // No email data provided
       address: formData.address,
-      preferredContact: "",  // Assuming no preferred contact provided, leaving it empty
+      preferredContact: "",  // Assuming no preferred contact provided
     },
     propertyPreferences: {
-      type: "",  // Assuming no property type given
-      budgetMin: 0,  // Assuming no budget provided
-      budgetMax: 0,  // Assuming no budget provided
-      location: formData.address,  // Using address as location
-      desiredFeatures: "",  // Assuming no features provided
+      type: "",  // No property type given
+      budgetMin: 0,  // No budget
+      budgetMax: 0,  // No budget
+      location: formData.address,  // Use address as location
+      desiredFeatures: "",  // No features provided
     },
     financialDetails: {
-      employmentStatus: "",  // Assuming no employment status provided
-      income: 0,  // Assuming no income data
-      downPayment: 0,  // Assuming no down payment
-      creditScore: 0,  // Assuming no credit score provided
+      employmentStatus: "",  // No employment status
+      income: 0,  // No income
+      downPayment: 0,  // No down payment
+      creditScore: 0,  // No credit score
     },
     propertyHistory: {
-      currentHousing: "",  // Assuming no current housing data
-      reasonForMoving: "",  // Assuming no reason for moving
-      previousAgent: "",  // Assuming no previous agent info
+      currentHousing: "",  // No housing info
+      reasonForMoving: "",  // No reason
+      previousAgent: "",  // No previous agent
     },
     additionalInfo: {
-      referralSource: "",  // Assuming no referral source
-      marketingConsent: false,  // Defaulting to false, since no consent is provided
+      referralSource: "",  // No referral source
+      marketingConsent: false,  // No consent
     },
-    termsAgreement: true,  // Assuming that terms are agreed by default
+    termsAgreement: true,  // Defaulting to true
   };
 };
 
+// Formik Validation Schema
+const validationSchema = Yup.object({
+  name: Yup.string().required("Full Name is required"),
+  phone: Yup.string().matches(/^\d+$/, "Phone number must be digits").required("Phone number is required"),
+  date: Yup.date().required("Date is required"),
+  address: Yup.string().required("Address is required"),
+  requirement: Yup.string().required("Requirement is required"),
+});
 // Example usage:
 
   // Formik Form Handling
-  const formik = useFormik({
+ const formik = useFormik({
     initialValues: generateRandomValue(), // Generates random initial values
     validationSchema,
     onSubmit: (values) => {
@@ -99,9 +98,11 @@ const mapToFormValues = (formData: any) => {
         date: values.date,
         status: "new",
       };
-      const formValues = mapToFormValues(newLead);
-      console.log(formValues);
-       dispatch(postProfileData(formValues));
+
+      const formValues = mapToFormValues(newLead);  // Map to FormValues format
+      console.log(formValues);  // Log the generated form values for debugging
+      dispatch(postProfileData(formValues)); // Post profile data if needed
+
       // ✅ Update Redux State (Append New Lead)
       dispatch(setLeads([...leads, newLead]));
 
