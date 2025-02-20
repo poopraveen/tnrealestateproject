@@ -8,7 +8,34 @@ import { setLeads } from "../../store/slices/dataSlice";
 const AddLeadModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const leads = useSelector((state) => state.data.leads); // Get existing leads from Redux
+  const generateRandomValue: any = () => {
+  const names = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
+  const phoneNumbers = [
+    "+1-234-567-8901", "+1-345-678-9012", "+1-456-789-0123", "+1-567-890-1234", "+1-678-901-2345"
+  ];
+  const addresses = [
+    "123 Elm St, Springfield, IL, 62701", 
+    "456 Oak St, Lincoln, NE, 68508", 
+    "789 Pine St, Madison, WI, 53703",
+    "321 Maple Ave, Boston, MA, 02115", 
+    "654 Birch Blvd, Austin, TX, 73301"
+  ];
+  const requirements = [
+    "Urgent request for delivery", 
+    "Looking for quick advice on a purchase", 
+    "Interested in a service demo", 
+    "Scheduled appointment for consultation", 
+    "Order status inquiry"
+  ];
 
+  return {
+    name: names[Math.floor(Math.random() * names.length)],
+    phone: phoneNumbers[Math.floor(Math.random() * phoneNumbers.length)],
+    date: new Date().toISOString().split("T")[0], // Current date
+    address: addresses[Math.floor(Math.random() * addresses.length)],
+    requirement: requirements[Math.floor(Math.random() * requirements.length)],
+  };
+}
   // Formik Validation Schema
   const validationSchema = Yup.object({
     name: Yup.string().required("Full Name is required"),
@@ -20,13 +47,7 @@ const AddLeadModal = ({ isOpen, onClose }) => {
 
   // Formik Form Handling
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      phone: "",
-      date: new Date().toISOString().split("T")[0], // Default to today’s date
-      address: "",
-      requirement: "",
-    },
+    initialValues:generateRandomValue(),
     validationSchema,
     onSubmit: (values) => {
       const newLead = {
