@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { postProfileData } from '../../store/slices/profileSlice'; // Import the postProfileData action
 import { setLeads } from "../../store/slices/dataSlice";
 
 const AddLeadModal = ({ isOpen, onClose }) => {
@@ -43,6 +44,49 @@ const AddLeadModal = ({ isOpen, onClose }) => {
     address: Yup.string().required("Address is required"),
     requirement: Yup.string().required("Requirement is required"),
   });
+  
+const mapToFormValues = (formData: any) => {
+  // Construct the response structure based on the provided data and schema
+  return {
+    personalDetails: {
+      firstName: formData.name.split(" ")[0],  // First part of name is the first name
+      lastName: formData.name.split(" ")[1] || "",  // Second part of name is the last name (if available)
+      dob: "",  // Assuming we don't have a date of birth in the provided data, leaving it empty
+      gender: "",  // Assuming we don't have gender, leaving it empty
+    },
+    contactDetails: {
+      phone: formData.phone,
+      email: "",  // Assuming no email provided, leaving it empty
+      address: formData.address,
+      preferredContact: "",  // Assuming no preferred contact provided, leaving it empty
+    },
+    propertyPreferences: {
+      type: "",  // Assuming no property type given
+      budgetMin: 0,  // Assuming no budget provided
+      budgetMax: 0,  // Assuming no budget provided
+      location: formData.address,  // Using address as location
+      desiredFeatures: "",  // Assuming no features provided
+    },
+    financialDetails: {
+      employmentStatus: "",  // Assuming no employment status provided
+      income: 0,  // Assuming no income data
+      downPayment: 0,  // Assuming no down payment
+      creditScore: 0,  // Assuming no credit score provided
+    },
+    propertyHistory: {
+      currentHousing: "",  // Assuming no current housing data
+      reasonForMoving: "",  // Assuming no reason for moving
+      previousAgent: "",  // Assuming no previous agent info
+    },
+    additionalInfo: {
+      referralSource: "",  // Assuming no referral source
+      marketingConsent: false,  // Defaulting to false, since no consent is provided
+    },
+    termsAgreement: true,  // Assuming that terms are agreed by default
+  };
+};
+
+// Example usage:
 
   // Formik Form Handling
   const formik = useFormik({
@@ -55,7 +99,9 @@ const AddLeadModal = ({ isOpen, onClose }) => {
         date: values.date,
         status: "new",
       };
-
+      const formValues = mapToFormValues(newLead);
+      console.log(formValues);
+       dispatch(postProfileData(formValues));
       // ✅ Update Redux State (Append New Lead)
       dispatch(setLeads([...leads, newLead]));
 
