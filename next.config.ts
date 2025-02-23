@@ -41,6 +41,14 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  i18n: {
+    locales: ['en', 'ta'],  // Keep the locales here, but don't enforce URL-based routing.
+    defaultLocale: 'en', // Set default language to 'en'
+    localeDetection: false, // Disable automatic language detection via URL
+  },
+  redirects: async () => {
+    return [];
+  },
 };
 
 export default nextConfig;

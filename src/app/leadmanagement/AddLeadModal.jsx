@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,6 +9,7 @@ import { setLeads } from "../../store/slices/dataSlice";
 
 const AddLeadModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const leads = useSelector((state) => state.data.leads); // Get existing leads from Redux
   const generateRandomValue = () => {
   const names = ["John Doe", "Alice Smith", "Bob Johnson", "Charlie Brown", "Dana White"];
@@ -119,11 +121,11 @@ const validationSchema = Yup.object({
       aria-hidden={!isOpen}
     >
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 transform transition-all scale-100">
-        <h2 className="text-lg font-semibold mb-4 text-black dark:text-white">Add New Lead</h2>
+        <h2 className="text-lg font-semibold mb-4 text-black dark:text-white">{t('addNewLead')}</h2>
 
         <form onSubmit={formik.handleSubmit}>
           {/* Full Name */}
-          <label className="block text-sm font-medium text-black dark:text-white">Full Name</label>
+          <label className="block text-sm font-medium text-black dark:text-white">{t('fullName')}</label>
           <input
             type="text"
             name="name"
@@ -135,7 +137,7 @@ const validationSchema = Yup.object({
           {formik.errors.name && <p className="text-red-500 text-xs">{formik.errors.name}</p>}
 
           {/* Phone Number */}
-          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Phone Number</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">{t('phoneNumber')}</label>
           <input
             type="text"
             name="phone"
@@ -146,7 +148,7 @@ const validationSchema = Yup.object({
           {formik.errors.phone && <p className="text-red-500 text-xs">{formik.errors.phone}</p>}
 
           {/* Date */}
-          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Date</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">{t('date')}</label>
           <input
             type="date"
             name="date"
@@ -157,7 +159,7 @@ const validationSchema = Yup.object({
           {formik.errors.date && <p className="text-red-500 text-xs">{formik.errors.date}</p>}
 
           {/* Address */}
-          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Address</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">{t('address')}</label>
           <input
             type="text"
             name="address"
@@ -168,7 +170,7 @@ const validationSchema = Yup.object({
           {formik.errors.address && <p className="text-red-500 text-xs">{formik.errors.address}</p>}
 
           {/* Requirement */}
-          <label className="block text-sm font-medium mt-3 text-black dark:text-white">Requirement</label>
+          <label className="block text-sm font-medium mt-3 text-black dark:text-white">{t('requirement')}</label>
           <textarea
             name="requirement"
             className="w-full p-2 border rounded mt-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
@@ -179,13 +181,13 @@ const validationSchema = Yup.object({
 
           {/* Submit Button */}
           <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded mt-4 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600">
-            Submit
+            {t('submit')}
           </button>
         </form>
 
         {/* Close Button */}
         <button onClick={onClose} className="w-full text-gray-600 mt-2 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
-          Cancel
+          {t('cancel')}
         </button>
       </div>
     </div>

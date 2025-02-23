@@ -60,6 +60,31 @@ export const postProfileData = createAsyncThunk(
   }
 );
 
+export const putProfileData = createAsyncThunk(
+  "profile/putProfileData",
+  async ({ leadId, profileData }: { leadId: string; profileData: any }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://real-pro-service.onrender.com/api/leads/${leadId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update lead data");
+      }
+
+      return await response.json();
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Unknown error");
+    }
+  }
+);
+
+
+
 interface Profile {
   personalDetails: {
     firstName: string;
@@ -99,16 +124,19 @@ interface Profile {
 }
 
 interface ProfileState {
-  profile: Profile | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  profile: any | null;
+  customers: any[];  // ✅ Add this to store leads
+  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
 const initialState: ProfileState = {
   profile: null,
-  status: 'idle',
+  customers: [],  // ✅ Initialize customers array
+  status: "idle",
   error: null,
 };
+
 
 const profileSlice = createSlice({
   name: 'profile',
@@ -128,15 +156,33 @@ const profileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Handle creating a lead (POST)
       .addCase(postProfileData.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(postProfileData.fulfilled, (state, action) => {
         state.profile = action.payload;
-        state.status = 'succeeded';
+        state.status = "succeeded";
       })
       .addCase(postProfileData.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = "failed";
+        state.error = action.payload as string;
+      })
+  
+      // Handle updating a lead (PUT)
+      .addCase(putProfileData.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(putProfileData.fulfilled, (state, action) => {
+        const updatedLead = action.payload;
+        const index = state.customers.findIndex((lead) => lead.id === updatedLead.id);
+        if (index !== -1) {
+          state.customers[index] = updatedLead; // Update the lead in the store
+        }
+        state.status = "succeeded";
+      })
+      .addCase(putProfileData.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.payload as string;
       });
   },

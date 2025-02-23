@@ -216,6 +216,7 @@
 
 
 import React, { useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../store/store";
@@ -229,6 +230,7 @@ const HomeScreen: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchPieData());
@@ -249,8 +251,8 @@ const HomeScreen: React.FC = () => {
   return (
     <div className="min-h-screen p-4 bg-gray-100 text-black dark:bg-gray-900 dark:text-white">
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold">SM NAGAR</h1>
-        <p className="text-gray-600 dark:text-gray-400">ABCD PROMOTERS</p>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <p className="text-gray-600 dark:text-gray-400">{t('company')}</p>
       </div>
 
       <div className="flex justify-end mb-4">
@@ -258,7 +260,7 @@ const HomeScreen: React.FC = () => {
       </div>
 
       <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
-        <h2 className="text-lg font-semibold">Plot Summary</h2>
+        <h2 className="text-lg font-semibold">{t('plotSummary')}</h2>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={60} label>
@@ -272,7 +274,7 @@ const HomeScreen: React.FC = () => {
       </div>
 
       <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
-        <h2 className="text-lg font-semibold">Plots per Project</h2>
+        <h2 className="text-lg font-semibold">{t('plotsPerProject')}</h2>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={barData}>
             <XAxis dataKey="name" />
@@ -287,27 +289,27 @@ const HomeScreen: React.FC = () => {
       </div>
 
       <div onClick={() => router.push("/leadmanagement")} className="p-4 rounded-lg shadow-md mb-4 flex items-center cursor-pointer bg-white dark:bg-gray-800">
-        <img src="/icons/web-app-manifest-512x512.png" alt="Lead Generation" className="w-12 h-12 rounded-full object-cover" />
+        <img src="/icons/web-app-manifest-512x512.png" alt={t('leadGeneration')} className="w-12 h-12 rounded-full object-cover" />
         <div className="ml-4">
-          <h2 className="text-lg font-semibold">Lead Generation</h2>
-          <p className="text-gray-500 dark:text-gray-400">Updated daily</p>
+          <h2 className="text-lg font-semibold">{t('leadGeneration')}</h2>
+          <p className="text-gray-500 dark:text-gray-400">{t('updatedDaily')}</p>
         </div>
       </div>
 
       <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
-        <h2 className="text-lg font-semibold">Lead Generation Trends</h2>
-        <p className="text-2xl font-bold">250 leads</p>
-        <p className="text-green-500">Last 30 days +12%</p>
+        <h2 className="text-lg font-semibold">{t('leadGenerationTrends')}</h2>
+        <p className="text-2xl font-bold">{t('leadCount')}</p>
+        <p className="text-green-500">{t('leadGrowth')}</p>
       </div>
 
       <div className="p-4 rounded-lg shadow-md mb-4 bg-white dark:bg-gray-800">
-        <h2 className="text-lg font-semibold">Projects</h2>
+        <h2 className="text-lg font-semibold">{t('projects')}</h2>
         <Carousel>
           {projectData.map((project, index) => (
             <div key={index} className="p-2">
               <img src={"/icons/web-app-manifest-512x512.png"} alt={project.title} className="w-full h-32 object-cover rounded-lg" />
               <h3 className="text-md font-semibold mt-2">{project.title}</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{project.description}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{t('projectDescription')}</p>
             </div>
           ))}
         </Carousel>
