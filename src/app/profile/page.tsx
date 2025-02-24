@@ -302,6 +302,150 @@ const RealEstateForm: React.FC = () => {
               </div>
             </div>
 
+            {/* Preferred Contact Method */}
+            <div className="mt-4">
+              <label htmlFor="preferredContact" className="block text-gray-900 dark:text-white mb-1">
+                {t('Preferred Contact Method')}
+              </label>
+              <Field as="select" id="preferredContact" name="contactDetails.preferredContact" className="input dark:bg-gray-700 dark:text-white">
+                <option value="">{t('Select Preferred Contact Method')}</option>
+                <option value="Phone">{t('Phone')}</option>
+                <option value="Email">{t('Email')}</option>
+                <option value="Text">{t('Text')}</option>
+              </Field>
+            </div>
+
+            {/* Property Preferences */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{t('Property Preferences')}</h3>
+
+              <div className="grid grid-cols-2 gap-4">
+                {/* Property Type */}
+                <div>
+                  <label htmlFor="propertyType" className="block text-gray-900 dark:text-white mb-1">{t('Property Type')}</label>
+                  <Field
+                    type="text"
+                    id="propertyType"
+                    name="propertyPreferences.type"
+                    placeholder={t('Property Type')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+
+                {/* Min Budget */}
+                <div>
+                  <label htmlFor="budgetMin" className="block text-gray-900 dark:text-white mb-1">{t('Min Budget')}</label>
+                  <Field
+                    type="number"
+                    id="budgetMin"
+                    name="propertyPreferences.budgetMin"
+                    placeholder={t('Min Budget')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {/* Max Budget */}
+                <div>
+                  <label htmlFor="budgetMax" className="block text-gray-900 dark:text-white mb-1">{t('Max Budget')}</label>
+                  <Field
+                    type="number"
+                    id="budgetMax"
+                    name="propertyPreferences.budgetMax"
+                    placeholder={t('Max Budget')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+
+                {/* Preferred Location */}
+                <div>
+                  <label htmlFor="location" className="block text-gray-900 dark:text-white mb-1">{t('Preferred Location')}</label>
+                  <Field
+                    type="text"
+                    id="location"
+                    name="propertyPreferences.location"
+                    placeholder={t('Preferred Location')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              {/* Desired Features */}
+              <div className="mt-4">
+                <label htmlFor="desiredFeatures" className="block text-gray-900 dark:text-white mb-1">{t('Desired Features')}</label>
+                <Field
+                  type="text"
+                  id="desiredFeatures"
+                  name="propertyPreferences.desiredFeatures"
+                  placeholder={t('Desired Features')}
+                  className="input dark:bg-gray-700 dark:text-white"
+                />
+              </div>
+            </div>
+
+            {/* Financial Information */}
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">{t('Financial Information')}</h3>
+
+              <div className="grid grid-cols-2 gap-4">
+                {/* Employment Status */}
+                <div>
+                  <label htmlFor="employmentStatus" className="block text-gray-900 dark:text-white mb-1">{t('Employment Status')}</label>
+                  <Field
+                    as="select"
+                    id="employmentStatus"
+                    name="financialDetails.employmentStatus"
+                    className="input dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="">{t('Select Employment Status')}</option>
+                    <option value="Employed">{t('Employed')}</option>
+                    <option value="Self-Employed">{t('Self-Employed')}</option>
+                    <option value="Unemployed">{t('Unemployed')}</option>
+                  </Field>
+                </div>
+
+                {/* Annual Income */}
+                <div>
+                  <label htmlFor="income" className="block text-gray-900 dark:text-white mb-1">{t('Annual Income')}</label>
+                  <Field
+                    type="number"
+                    id="income"
+                    name="financialDetails.income"
+                    placeholder={t('Annual Income')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                {/* Down Payment */}
+                <div>
+                  <label htmlFor="downPayment" className="block text-gray-900 dark:text-white mb-1">{t('Down Payment')}</label>
+                  <Field
+                    type="number"
+                    id="downPayment"
+                    name="financialDetails.downPayment"
+                    placeholder={t('Down Payment')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+
+                {/* Credit Score */}
+                <div>
+                  <label htmlFor="creditScore" className="block text-gray-900 dark:text-white mb-1">{t('Credit Score')}</label>
+                  <Field
+                    type="number"
+                    id="creditScore"
+                    name="financialDetails.creditScore"
+                    placeholder={t('Credit Score')}
+                    className="input dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+              </div>
+            </div>
+
+
             {/* Submit Button */}
             <div className="flex justify-center mt-4">
               <button

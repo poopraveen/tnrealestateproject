@@ -90,5 +90,31 @@
   "This Sale Deed Agreement is executed as per the provisions of the Indian Contract Act, 1872.": "This Sale Deed Agreement is executed as per the provisions of the Indian Contract Act, 1872.",
   "Terms Agreement": "Terms Agreement",
   "Agreed": "Agreed",
-  "Sale Deed Agreement - Customer Copy": "Sale Deed Agreement - Customer Copy"
+  "Sale Deed Agreement - Customer Copy": "Sale Deed Agreement - Customer Copy",
+  "Preferred Contact Method": "Preferred Contact Method",
+  "Select Preferred Contact Method": "Select Preferred Contact Method",
+  "Select Employment Status": "Select Employment Status",
+  "Employed": "Employed",
+  "Self-Employed": "Self-Employed",
+  "Unemployed": "Unemployed",
+  "Annual Income": "Annual Income",
+  "Projects": "Projects",
+  "Available Projects": "Available Projects",
+  "Number of Plots": "Number of Plots",
+  "View": "View",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "+ Add New Project": "+ Add New Project",
+  "projectDocuments": {
+    "projectName": "Project Name",
+    "location": "Location",
+    "area": "Area",
+    "dtpcNumber": "DTPC Number",
+    "localBodyNumber": "Local Body Number",
+    "rercAppNo": "RERC Application Number",
+    "pr": "PR",
+    "ecDocuments": "EC Documents",
+    "potta": "Potta",
+    "title": "Project Details"
+  }
 }
