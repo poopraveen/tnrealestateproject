@@ -1,9 +1,13 @@
-'use client'
-import { useDispatch } from "react-redux";
+'use client';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
 import { useTranslation } from "react-i18next";
 import { useFormik } from "formik";
 import * as Yup from "yup"; // For validation
-import { addProjectData } from "../../store/slices/projectSlice"; // Assuming the action is named this
+import { addProjectData, initializeProjects, selectProjectsState } from "../../store/slices/projectSlice"; // Assuming the action is named this
+import { useLoaderContext } from '../../app/LoaderContext';  // Adjust path
+import FullPageLoader from '../components/Loader';  // Adjust path
 
 interface FormValues {
     projectName: string;
@@ -19,30 +23,47 @@ interface FormValues {
 const AddNewProject = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const router = useRouter();
+    const { Addstatus: status} = useSelector(selectProjectsState);
+    const { isLoading, startLoading, stopLoading } = useLoaderContext();
+
+    useEffect(() => {
+        dispatch(initializeProjects());
+    }, [dispatch])
+
+    // Check if the component is rendered on the client side
+    useEffect(() => {
+        // Only try to redirect if the component is on the client side
+        if (status === "succeeded") {
+            stopLoading();
+            router.push("/ProjectList");
+        }
+    }, [status, router, stopLoading]);
+
     const generateRandomValues = () => {
         const randomString = (length: number) => {
-          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-          let result = '';
-          for (let i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * characters.length));
-          }
-          return result;
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
         };
-      
+
         const randomNumber = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
-      
+
         return {
-          projectName: `Project ${randomString(5)}`,          // Random project name
-          location: `Location ${randomString(5)}`,            // Random location
-          area: `${randomNumber(1000, 10000)} sq ft`,         // Random area (in sq ft)
-          dtpcNumber: `DTPC${randomNumber(1000, 9999)}`,      // Random DTPC number
-          localBodyApproval: `LBA${randomNumber(100, 999)}`,  // Random Local Body Approval number
-          rercAppNo: `RERC${randomNumber(10000, 99999)}`,     // Random RERC App number
-          parentDocuments: null,                              // You could generate random file data if needed
-          uploadedDocuments: null,                            // Same as parent documents
+            projectName: `Project ${randomString(5)}`,          // Random project name
+            location: `Location ${randomString(5)}`,            // Random location
+            area: `${randomNumber(1000, 10000)} sq ft`,         // Random area (in sq ft)
+            dtpcNumber: `DTPC${randomNumber(1000, 9999)}`,      // Random DTPC number
+            localBodyApproval: `LBA${randomNumber(100, 999)}`,  // Random Local Body Approval number
+            rercAppNo: `RERC${randomNumber(10000, 99999)}`,     // Random RERC App number
+            parentDocuments: null,                              // You could generate random file data if needed
+            uploadedDocuments: null,                            // Same as parent documents
         };
-      };
-      
+    };
+
 
     // Initialize Formik
     const formik = useFormik<FormValues>({
@@ -54,17 +75,18 @@ const AddNewProject = () => {
             dtpcNumber: Yup.string().required(t("DTPC Approved Number is required")),
             localBodyApproval: Yup.string().required(t("Localbody Approval Number is required")),
             rercAppNo: Yup.string().required(t("Rerc App No is required")),
-            parentDocuments: Yup.mixed().required(t("Parent documents are required")),
-            uploadedDocuments: Yup.mixed().required(t("Uploaded documents are required")),
+            parentDocuments: Yup.mixed().nullable(),//required(t("Parent documents are required"))
+            uploadedDocuments: Yup.mixed().nullable() //.required(t("Uploaded documents are required")),
         }),
         onSubmit: (values) => {
+            startLoading();
             dispatch(addProjectData({
-                id: 'asa',  // You can generate this ID dynamically if needed
                 data: values,  // Passing the form values directly
                 plots: []  // Make sure this matches the expected structure
             }));
         },
     });
+
 
     return (
         <div className="container mx-auto p-6 dark:bg-gray-900 dark:text-white">
@@ -233,6 +255,7 @@ const AddNewProject = () => {
                     </button>
                 </div>
             </form>
+            {isLoading && <FullPageLoader />}
         </div>
     );
 };

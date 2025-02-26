@@ -12,6 +12,7 @@ interface ProjectData {
 interface ProjectState {
   data: ProjectData[];
   status: "idle" | "loading" | "succeeded" | "failed";
+  Addstatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
 
@@ -19,6 +20,7 @@ interface ProjectState {
 const initialState: ProjectState = {
   data: [],
   status: "idle",
+  Addstatus: "idle",
   error: null,
 };
 
@@ -36,7 +38,6 @@ export const fetchProjects = createAsyncThunk("projects/fetchProjects", async ()
   return data;
 });
 
-
 // Async thunk to add a new project
 export const addProjectData: any = createAsyncThunk(
   "projects/addProjectData",
@@ -53,11 +54,22 @@ export const addProjectData: any = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Failed to post profile data');
       }
-      console.log("projectData",response.json());
-      return await response.json(); // or response.data depending on your API structure
+      const data = await response.json();  // Wait for the json data
+      console.log("getData, response", data);  // Log the actual data here
+
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
+  }
+);
+
+// Initialize action to reset state
+export const initializeProjects:any = createAsyncThunk(
+  "projects/initializeProjects",
+  async () => {
+    // Initialization logic can go here if needed (e.g., resetting state)
+    return;
   }
 );
 
@@ -68,6 +80,14 @@ const projectSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Initialize state
+      .addCase(initializeProjects.pending, (state) => {
+        state.status = "idle";
+        state.Addstatus = "idle";
+        state.error = null;
+        state.data = [];
+      })
+
       // Fetch projects
       .addCase(fetchProjects.pending, (state) => {
         state.status = "loading";
@@ -84,14 +104,14 @@ const projectSlice = createSlice({
 
       // Add project
       .addCase(addProjectData.pending, (state) => {
-        state.status = "loading";
+        state.Addstatus = "loading";
       })
       .addCase(addProjectData.fulfilled, (state, action: PayloadAction<ProjectData>) => {
-        state.status = "succeeded";
+        state.Addstatus = "succeeded";
         state.data.push(action.payload);
       })
       .addCase(addProjectData.rejected, (state, action) => {
-        state.status = "failed";
+        state.Addstatus = "failed";
         state.error = action.payload as string;
       });
   },
@@ -99,6 +119,7 @@ const projectSlice = createSlice({
 
 // Selectors
 export const selectProjects = (state: RootState) => state.projects.data;
+export const selectProjectsState = (state: RootState) => state.projects;
 export const selectProjectStatus = (state: RootState) => state.projects.status;
 export const selectProjectError = (state: RootState) => state.projects.error;
 
