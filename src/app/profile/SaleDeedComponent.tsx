@@ -1,12 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Document, Page, Text, View, StyleSheet, pdf, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, pdf, Image, Font } from '@react-pdf/renderer';
+Font.register({
+  family: 'Thendral',
+  src: '/tamilfont.ttf', // Use the URL of the font
+});
 
-const SaleDeed = ({ data }: {data: any}) => {
+const SaleDeed = ({ data }: { data: any }) => {
+  const { t, i18n } = useTranslation();
+  // Register the Tamil font (Noto Sans Tamil)
+
+  const fontFamily = i18n.language === 'ta' ? 'Thendral' : 'Helvetica';
   const styles = StyleSheet.create({
     page: {
       padding: 30,
-      fontFamily: 'Helvetica',
+      fontFamily,
     },
     header: {
       flexDirection: 'row',
@@ -77,12 +85,24 @@ const SaleDeed = ({ data }: {data: any}) => {
       color: '#555555',
       lineHeight: 1.6,
     },
+    signatureContainer: {
+      marginTop: 40,
+      textAlign: 'center',
+    },
+    signatureText: {
+      fontSize: 14,
+      fontStyle: 'italic',
+      marginBottom: 10,
+    },
+    signatureImage: {
+      width: 150,
+      height: 60,
+    },
   });
 
   const safeGet = (obj: any, path: any, defaultValue = 'N/A') => {
     return path.split('.').reduce((acc: any, part: any) => acc && acc[part] ? acc[part] : defaultValue, obj);
   };
- const { t } = useTranslation();
   return (
     <Document>
       <Page style={styles.page}>
@@ -91,7 +111,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Image style={styles.logo} src="/icons/web-app-manifest-512x512.png" /> {/* Replace with actual logo path */}
           <Text style={styles.headerText}>{t('Sale Deed Agreement')}</Text>
         </View>
-  
+
         {/* Personal Details Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Personal Details')}</Text>
@@ -101,7 +121,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Date of Birth')}:</Text> {safeGet(data, 'personalDetails.dob')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Gender')}:</Text> {safeGet(data, 'personalDetails.gender')}</Text>
         </View>
-  
+
         {/* Contact Details Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Contact Details')}</Text>
@@ -111,7 +131,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Address')}:</Text> {safeGet(data, 'contactDetails.address')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Preferred Contact')}:</Text> {safeGet(data, 'contactDetails.preferredContact')}</Text>
         </View>
-  
+
         {/* Property Preferences Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Property Preferences')}</Text>
@@ -122,7 +142,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Location')}:</Text> {safeGet(data, 'propertyPreferences.location')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Desired Features')}:</Text> {safeGet(data, 'propertyPreferences.desiredFeatures')}</Text>
         </View>
-  
+
         {/* Financial Details Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Financial Details')}</Text>
@@ -132,7 +152,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Down Payment')}:</Text> {safeGet(data, 'financialDetails.downPayment')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Credit Score')}:</Text> {safeGet(data, 'financialDetails.creditScore')}</Text>
         </View>
-  
+
         {/* Property History Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Property History')}</Text>
@@ -141,7 +161,7 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Reason for Moving')}:</Text> {safeGet(data, 'propertyHistory.reasonForMoving')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Previous Agent')}:</Text> {safeGet(data, 'propertyHistory.previousAgent')}</Text>
         </View>
-  
+
         {/* Additional Info Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Additional Information')}</Text>
@@ -149,29 +169,36 @@ const SaleDeed = ({ data }: {data: any}) => {
           <Text style={styles.text}><Text style={styles.boldText}>{t('Referral Source')}:</Text> {safeGet(data, 'additionalInfo.referralSource')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Marketing Consent')}:</Text> {safeGet(data, 'additionalInfo.marketingConsent') ? t('Yes') : t('No')}</Text>
         </View>
-  
+
         {/* Terms and Conditions Section */}
         <View style={styles.termsSection}>
           <Text style={styles.termsHeading}>{t('Terms and Conditions')}</Text>
           <View style={styles.goldenStrip}></View>
           <Text style={styles.termsText}>
-            1. {t('This Sale Deed Agreement is executed as per the provisions of the Indian Contract Act, 1872.')}{'\n'}
-            2. {t('The Buyer has inspected the property and is satisfied with the condition of the same.')}{'\n'}
-            3. {t('The Seller hereby transfers the property rights to the Buyer for the agreed consideration amount.')}{'\n'}
-            4. {t('The Buyer agrees to pay the full sale consideration as per the terms agreed upon, and the Sale Deed will be executed after the payment is made.')}{'\n'}
-            5. {t('The Buyer shall not transfer or assign the property without the consent of the Seller.')}{'\n'}
-            6. {t('Any dispute arising between the Buyer and Seller shall be resolved as per the jurisdiction of the court in [State Name].')}{'\n'}
-            7. {t('This Agreement shall be binding and enforceable once signed by both parties.')}
+            1. {t('SaleDeedAgreement.provisionsIndianContractAct')}{'\n'}
+            2. {t('SaleDeedAgreement.buyerInspectedProperty')}{'\n'}
+            3. {t('SaleDeedAgreement.sellerTransfersRights')}{'\n'}
+            4. {t('SaleDeedAgreement.buyerAgreesToPay')}{'\n'}
+            5. {t('SaleDeedAgreement.buyerNotTransferProperty')}{'\n'}
+            6. {t('SaleDeedAgreement.disputeResolution')}{'\n'}
+            7. {t('SaleDeedAgreement.bindingAgreement')}
           </Text>
         </View>
-  
+
         {/* Terms Agreement Section */}
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Terms Agreement')}</Text>
           <View style={styles.goldenStrip}></View>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Agreed')}:</Text> {safeGet(data, 'termsAgreement') ? t('Yes') : t('No')}</Text>
         </View>
-  
+
+        {/* <View style={styles.signatureContainer}>
+          <Text style={styles.signatureText}>Signed by:</Text>
+          <Text style={styles.signatureText}>_________</Text> 
+          <Text style={styles.signatureText}>Seller/Buyer Name</Text>
+        </View> */}
+
+
         {/* Footer */}
         <View style={styles.footer}>
           <Text>{t('Sale Deed Agreement - Customer Copy')}</Text>

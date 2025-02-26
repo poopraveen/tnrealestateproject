@@ -145,5 +145,15 @@
   "RERC App No": "RERC App No",
   "View More Details": "View More Details",
   "Show Details": "Show Details",
-  "Hide Details": "Hide Detail"
+  "Hide Details": "Hide Detail",
+    "SaleDeedAgreement": {
+      "provisionsIndianContractAct": "This Sale Deed Agreement is executed as per the provisions of the Indian Contract Act, 1872.",
+      "buyerInspectedProperty": "The Buyer has inspected the property and is satisfied with the condition of the same.",
+      "sellerTransfersRights": "The Seller hereby transfers the property rights to the Buyer for the agreed consideration amount.",
+      "buyerAgreesToPay": "The Buyer agrees to pay the full sale consideration as per the terms agreed upon, and the Sale Deed will be executed after the payment is made.",
+      "buyerNotTransferProperty": "The Buyer shall not transfer or assign the property without the consent of the Seller.",
+      "disputeResolution": "Any dispute arising between the Buyer and Seller shall be resolved as per the jurisdiction of the court in [State Name].",
+      "bindingAgreement": "This Agreement shall be binding and enforceable once signed by both parties."
+    }
+  
 }
