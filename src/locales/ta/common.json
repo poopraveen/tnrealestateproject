@@ -120,5 +120,25 @@
     "ecDocuments": "EC ஆவணங்கள்",
     "potta": "பொட்டா",
     "title": "புரஜெக்ட் விவரங்கள்"
-  }
+  },
+    "Project Details": "திட்ட விவரங்கள்",
+    "Project Name": "திட்டத்தின் பெயர்",
+    "Area": "பரப்பு",
+    "DTPC Approved Number": "DTPC ஒப்புதல் எண்",
+    "Localbody Approval Number": "உள்ளாட்சி ஒப்புதல் எண்",
+    "Rerc App No": "Rerc அப்பி எண்",
+    "Parent Documents": "பெற்றோர்கள் ஆவணங்கள்",
+    "Uploaded Documents": "பதிவேற்றிய ஆவணங்கள்",
+    "Save": "சேமிக்கவும்",
+    "Cancel": "ரத்து செய்யவும்",
+    "Upload Parent Documents": "பெற்றோர்களின் ஆவணங்களை பதிவேற்றவும்",
+    "Upload Documents": "ஆவணங்களை பதிவேற்றவும்",
+    "Name is required": "பெயர் தேவை",
+    "Location is required": "இருப்பிடம் தேவை",
+    "Area is required": "பரப்பு தேவை",
+    "DTPC Approved Number is required": "DTPC ஒப்புதல் எண் தேவை",
+    "Localbody Approval Number is required": "உள்ளாட்சி ஒப்புதல் எண் தேவை",
+    "Rerc App No is required": "Rerc அப்பி எண் தேவை",
+    "Parent documents are required": "பெற்றோர்கள் ஆவணங்கள் தேவை",
+    "Uploaded documents are required": "பதிவேற்றிய ஆவணங்கள் தேவை"
 }

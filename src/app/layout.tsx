@@ -20,7 +20,7 @@ export default function RootLayout({
           <ThemeProvider>
             <ReduxProvider>
               <Header />
-              <main className="flex-1 pb-20"> {/* Ensure main content has bottom padding */}
+              <main className="flex-1"> {/* Ensure main content has bottom padding */}
                 {children}
               </main>
               <Footer />

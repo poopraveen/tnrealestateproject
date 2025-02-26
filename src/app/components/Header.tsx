@@ -65,7 +65,7 @@ const Header = () => {
             </button>
             <ul className="space-y-4 text-center text-white">
               <li><Link href="/">{t('home')}</Link></li>
-              <li><Link href="/maps">{t('search')}</Link></li>
+              <li><Link href="/ProjectList">{t('Project')}</Link></li>
               <li><Link href="/Dashboard">{t('notifications')}</Link></li>
               <li><Link href="/profile">{t('profile')}</Link></li>
               <li><ThemeToggle /></li>
