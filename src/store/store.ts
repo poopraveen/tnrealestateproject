@@ -4,6 +4,8 @@ import dataReducer from './slices/dataSlice';
 import profileReducer from './slices/profileSlice';
 import customerReducer from './slices/customerSlice';
 import projectReducer from './slices/projectSlice';
+import customerDataReducer from './slices/editCustomerSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +13,7 @@ export const store = configureStore({
     profile: profileReducer,
     customers: customerReducer,
     projects: projectReducer,
+    customerData: customerDataReducer,
   },
 });
 

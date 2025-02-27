@@ -56,7 +56,9 @@ const CustomerList: React.FC = () => {
                 Advance Amount: ${customer?.data?.financialDetails.downPayment ?? 0}
               </p>
             </div>
-            <FiEdit2 className="text-gray-400 dark:text-gray-300 cursor-pointer" />
+            <Link href={`/edit-customer/${customer.id}`}>
+              <FiEdit2 className="text-gray-400 dark:text-gray-300 cursor-pointer" />
+            </Link>
           </div>
         ))}
       </div>
