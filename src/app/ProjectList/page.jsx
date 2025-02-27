@@ -140,7 +140,7 @@ const Projects = () => {
 
                       {/* View More Link */}
                       <div className="mt-4">
-                        <Link href={`/ProjectDetails?id=${project.id}`} className="text-teal-500 dark:text-teal-400 hover:underline">
+                        <Link href={`/ProjectDetails/${project.id}`} className="text-teal-500 dark:text-teal-400 hover:underline">
                           {t('View More Details')}
                         </Link>
                       </div>

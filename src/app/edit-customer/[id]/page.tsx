@@ -138,7 +138,7 @@ const EditCustomerForm: React.FC = () => {
         actions.setSubmitting(false);
         router.push('/customerlist');  // Redirect to customer list or any other page after update
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('Failed to update customer:', error);
         actions.setSubmitting(false);
       });
