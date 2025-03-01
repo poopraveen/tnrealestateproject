@@ -1,8 +1,8 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { pdf } from '@react-pdf/renderer';
 import SaleDeed from './SaleDeedComponent';
 import { RootState, AppDispatch } from "../../store/store";
@@ -105,6 +105,8 @@ const RealEstateForm: React.FC = () => {
   const [image, setImage] = useState<string | null>(null); // State to hold the uploaded image
   const dispatch = useDispatch<AppDispatch>();
 
+  const imageUrl: any = useSelector((state: RootState) => state.profile?.imageUrl); // Select customer data from Redux state
+
   // Handle the image file selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -116,6 +118,9 @@ const RealEstateForm: React.FC = () => {
       reader.readAsDataURL(file); // Read the file as base64
     }
   };
+  useEffect(()=>{
+    alert(imageUrl)
+  },[imageUrl])
 
   const handleSubmitupload = () => {
     if (image) {
@@ -126,8 +131,9 @@ const RealEstateForm: React.FC = () => {
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     console.log('Form values:', values);
     actions.setSubmitting(false);
-    dispatch(postProfileData({ data: values })); // Dispatch postProfileData action
-    generatePdfUrl(values);
+    const imageUrlData = imageUrl??''
+    dispatch(postProfileData({ data: {...values, imageUrl: imageUrlData} })); // Dispatch postProfileData action
+    generatePdfUrl({...values, imageUrl: imageUrlData});
   };
 
   const generatePdfUrl = (profileData: any) => {

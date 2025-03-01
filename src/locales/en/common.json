@@ -154,6 +154,25 @@
       "buyerNotTransferProperty": "The Buyer shall not transfer or assign the property without the consent of the Seller.",
       "disputeResolution": "Any dispute arising between the Buyer and Seller shall be resolved as per the jurisdiction of the court in [State Name].",
       "bindingAgreement": "This Agreement shall be binding and enforceable once signed by both parties."
-    }
-  
+    },
+  "plotInformation": "Plot Information",
+  "phaseA": "Phase A",
+  "phaseB": "Phase B",
+  "phaseC": "Phase C",
+  "searchPlotNumber": "Search Plot Number",
+  "plotNumber": "Plot Number",
+  "facing": "Facing",
+  "corner": "Corner",
+  "status": "Status",
+  "booked": "Booked",
+  "hold": "Hold",
+  "registered": "Registered",
+  "available": "Available",
+  "north": "North",
+  "south": "South",
+  "east": "East",
+  "west": "West",
+  "yes": "Yes",
+  "no": "No",
+  "addNewProject": "+ Add New Project"
 }

@@ -37,26 +37,26 @@ const CustomerList: React.FC = () => {
       {/* Customer List */}
       {/* Customer List */}
       <div className="space-y-4">
-        {customers.map((customer) => (
+        {customers.map((customer: any) => (
           <div
             key={customer.id}
             className="flex items-center bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md dark:border-gray-600"
           >
             <img
-              src={customer.image || DEFAULT_IMAGE}
-              alt={`${customer.data.personalDetails.firstName} ${customer.data.personalDetails.lastName}`}
+              src={customer?.data?.imageUrl || DEFAULT_IMAGE}
+              alt={`${customer?.data?.personalDetails?.firstName} ${customer?.data?.personalDetails?.lastName}`}
               className="w-12 h-12 rounded-full object-cover"
               onError={(e) => (e.currentTarget.src = DEFAULT_IMAGE)}
             />
             <div className="ml-4 flex-1">
               <h2 className="text-lg font-medium text-black dark:text-white">
-                {customer?.data?.personalDetails.firstName} {customer?.data?.personalDetails?.lastName}
+                {customer?.data?.personalDetails?.firstName} {customer?.data?.personalDetails?.lastName}
               </h2>
               <p className="text-gray-500 dark:text-gray-300">
-                Advance Amount: ${customer?.data?.financialDetails.downPayment ?? 0}
+                Advance Amount: ${customer?.data?.financialDetails?.downPayment ?? 0}
               </p>
             </div>
-            <Link href={`/edit-customer/${customer.id}`}>
+            <Link href={`/edit-customer/${customer?.id}`}>
               <FiEdit2 className="text-gray-400 dark:text-gray-300 cursor-pointer" />
             </Link>
           </div>

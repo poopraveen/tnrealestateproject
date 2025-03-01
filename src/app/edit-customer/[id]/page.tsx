@@ -65,7 +65,7 @@ const EditCustomerForm: React.FC = () => {
   const {id} = useParams();
   const router = useRouter();
   // const { id } = router.query;  // Capture the ID from the route
-
+  
   const customerData: any = useSelector((state: RootState) => state.customerData.customerData); // Select customer data from Redux state
   const [isLoading, setIsLoading] = useState<boolean>(true); // To track the loading state
 

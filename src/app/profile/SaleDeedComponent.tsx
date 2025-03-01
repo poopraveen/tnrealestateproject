@@ -98,11 +98,45 @@ const SaleDeed = ({ data }: { data: any }) => {
       width: 150,
       height: 60,
     },
+     // New styles for profile image and initials
+     profileImageContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end', // Align the profile image to the right
+    },
+    profileImage: {
+      width: 50,
+      height: 50,
+      borderRadius: 25, // Circle shape
+      marginLeft: 10, // Space between text and image
+    },
+    profileInitials: {
+      width: 50,
+      height: 50,
+      borderRadius: 25, // Circle shape
+      backgroundColor: '#cccccc',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+      fontSize: 18,
+      color: '#ffffff',
+      fontWeight: 'bold',
+    },
   });
-
   const safeGet = (obj: any, path: any, defaultValue = 'N/A') => {
     return path.split('.').reduce((acc: any, part: any) => acc && acc[part] ? acc[part] : defaultValue, obj);
   };
+
+  const getInitials = (firstName: string, lastName: string) => {
+    return (firstName[0] || '') + (lastName[0] || '');
+  };
+
+  const profileImage = safeGet(data, 'personalDetails.imageUrl');
+  const firstName = safeGet(data, 'personalDetails.firstName');
+  const lastName = safeGet(data, 'personalDetails.lastName');
+
+ 
   return (
     <Document>
       <Page style={styles.page}>
@@ -116,8 +150,20 @@ const SaleDeed = ({ data }: { data: any }) => {
         <View style={styles.section}>
           <Text style={styles.heading}>{t('Personal Details')}</Text>
           <View style={styles.goldenStrip}></View>
-          <Text style={styles.text}><Text style={styles.boldText}>{t('First Name')}:</Text> {safeGet(data, 'personalDetails.firstName')}</Text>
-          <Text style={styles.text}><Text style={styles.boldText}>{t('Last Name')}:</Text> {safeGet(data, 'personalDetails.lastName')}</Text>
+          
+         {/* Profile Image or Initials */}
+         <View style={styles.profileImageContainer}>
+            {profileImage ? (
+              <Image style={styles.profileImage} src={profileImage} />
+            ) : (
+              <View style={styles.profileInitials}>
+                <Text>{getInitials(firstName, lastName)}</Text>
+              </View>
+            )}
+          </View>
+
+          <Text style={styles.text}><Text style={styles.boldText}>{t('First Name')}:</Text> {firstName}</Text>
+          <Text style={styles.text}><Text style={styles.boldText}>{t('Last Name')}:</Text> {lastName}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Date of Birth')}:</Text> {safeGet(data, 'personalDetails.dob')}</Text>
           <Text style={styles.text}><Text style={styles.boldText}>{t('Gender')}:</Text> {safeGet(data, 'personalDetails.gender')}</Text>
         </View>

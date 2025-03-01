@@ -11,7 +11,7 @@ export const uploadImage = createAsyncThunk(
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
-      
+
       // Extract file type from Base64 string
       const mimeType = base64String.match(/^data:(.*?);base64,/)?.[1] || 'image/png';
       const fileBlob = new Blob([byteArray], { type: mimeType });
@@ -30,19 +30,20 @@ export const uploadImage = createAsyncThunk(
         throw new Error('Failed to upload image');
       }
 
-      return await response.json();
+      const data = await response.text();
+      console.log("getData, response", data);  // Log the actual data here
+
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
 
-
 export const postProfileData = createAsyncThunk(
   'profile/postProfileData',
   async (profileData: any, { rejectWithValue }) => {
     try {
-      // Assuming you are using fetch to post the data
       const response = await fetch('https://real-pro-service.onrender.com/api/leads', {
         method: 'POST',
         headers: {
@@ -50,10 +51,12 @@ export const postProfileData = createAsyncThunk(
         },
         body: JSON.stringify(profileData),
       });
+
       if (!response.ok) {
         throw new Error('Failed to post profile data');
       }
-      return await response.json(); // or response.data depending on your API structure
+
+      return await response.json();
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -61,29 +64,27 @@ export const postProfileData = createAsyncThunk(
 );
 
 export const putProfileData = createAsyncThunk(
-  "profile/putProfileData",
+  'profile/putProfileData',
   async ({ leadId, profileData }: { leadId: string; profileData: any }, { rejectWithValue }) => {
     try {
       const response = await fetch(`https://real-pro-service.onrender.com/api/leads/${leadId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(profileData),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update lead data");
+        throw new Error('Failed to update lead data');
       }
 
       return await response.json();
     } catch (error: any) {
-      return rejectWithValue(error.message || "Unknown error");
+      return rejectWithValue(error.message || 'Unknown error');
     }
   }
 );
-
-
 
 interface Profile {
   personalDetails: {
@@ -125,18 +126,19 @@ interface Profile {
 
 interface ProfileState {
   profile: any | null;
-  customers: any[];  // ✅ Add this to store leads
-  status: "idle" | "loading" | "succeeded" | "failed";
+  customers: any[];  // Add this to store leads
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  imageUrl: string | null; // Add a field for the uploaded image URL
 }
 
 const initialState: ProfileState = {
   profile: null,
-  customers: [],  // ✅ Initialize customers array
-  status: "idle",
+  customers: [],
+  status: 'idle',
   error: null,
+  imageUrl: null, // Initialize imageUrl to null
 };
-
 
 const profileSlice = createSlice({
   name: 'profile',
@@ -153,41 +155,57 @@ const profileSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
+    setImageUrl(state, action: PayloadAction<string>) {
+      state.imageUrl = action.payload; // Store the image URL after upload
+    },
   },
   extraReducers: (builder) => {
     builder
+      // Handle image upload
+      .addCase(uploadImage.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(uploadImage.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.imageUrl = action.payload; // Assuming the uploaded image URL is returned here
+      })
+      .addCase(uploadImage.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+
       // Handle creating a lead (POST)
       .addCase(postProfileData.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(postProfileData.fulfilled, (state, action) => {
         state.profile = action.payload;
-        state.status = "succeeded";
+        state.status = 'succeeded';
       })
       .addCase(postProfileData.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.payload as string;
       })
-  
+
       // Handle updating a lead (PUT)
       .addCase(putProfileData.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
       })
       .addCase(putProfileData.fulfilled, (state, action) => {
         const updatedLead = action.payload;
         const index = state.customers.findIndex((lead) => lead.id === updatedLead.id);
         if (index !== -1) {
-          state.customers[index] = updatedLead; // Update the lead in the store
+          state.customers[index] = updatedLead;
         }
-        state.status = "succeeded";
+        state.status = 'succeeded';
       })
       .addCase(putProfileData.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
         state.error = action.payload as string;
       });
   },
 });
 
-export const { addProfile, profileLoading, profileError } = profileSlice.actions;
+export const { addProfile, profileLoading, profileError, setImageUrl } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -5,6 +5,7 @@ import profileReducer from './slices/profileSlice';
 import customerReducer from './slices/customerSlice';
 import projectReducer from './slices/projectSlice';
 import customerDataReducer from './slices/editCustomerSlice';
+import plotReducer from './slices/plotSlice';
 
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     customers: customerReducer,
     projects: projectReducer,
     customerData: customerDataReducer,
+    plots: plotReducer,
   },
 });
 
