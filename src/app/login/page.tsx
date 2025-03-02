@@ -50,7 +50,6 @@ const Login = () => {
             <label className="block text-gray-700 dark:text-gray-300">{t('email')}</label>
             <input
               type="email"
-              name="email"
               className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
               {...formik.getFieldProps('email')}
             />
@@ -61,7 +60,6 @@ const Login = () => {
             <label className="block text-gray-700 dark:text-gray-300">{t('password')}</label>
             <input
               type="password"
-              name="password"
               className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
               {...formik.getFieldProps('password')}
             />
