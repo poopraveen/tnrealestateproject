@@ -5,7 +5,12 @@ import * as Yup from "yup";
 import { useParams, useRouter } from 'next/navigation';
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
-import { addPlot, selectAddPlotStatus } from '../../../store/slices/plotSlice';
+import { RootState } from '../../../../store/store';
+import {updateCustomerData} from '../../../../store/slices/editCustomerSlice'
+import { addPlot, selectAddPlotStatus, selectAddPlotData } from '../../../../store/slices/plotSlice';
+import { selectProjectById } from '../../../../store/slices/projectSlice';
+import { selectCustomerById } from '../../../../store/slices/customerSlice';
+import { putProfileData } from '../../../../store/slices/profileSlice';
 
 const getRandomPlotNumber = () => Math.floor(100 + Math.random() * 900);
 const getRandomBoolean = () => Boolean(Math.round(Math.random()));
@@ -14,10 +19,14 @@ const getRandomStatus = () => ["Booked", "Available", "Hold"][Math.floor(Math.ra
 
 const PlotDetailsForm = () => {
   const { t } = useTranslation();
-    const { id } = useParams();  // Get project ID from URL params
+    const { id, customerId } = useParams();  // Get project ID from URL params
+  const project = useSelector((state: RootState) => selectProjectById(state, id));
+  const customerDetails: any = useSelector((state: RootState) => selectCustomerById(state, customerId));
+  
   const dispatch = useDispatch();
   const router = useRouter()
   const addPlotStatus = useSelector(selectAddPlotStatus);
+  const selectPlotData = useSelector(selectAddPlotData);
   const formik = useFormik({
     initialValues: {
       plotName: "Plot " + getRandomPlotNumber(),
@@ -42,10 +51,11 @@ const PlotDetailsForm = () => {
       plotBoundaryWest: Yup.string().required(t("required")),
     }),
     onSubmit: (values) => {
+      console.log('project data', project)
       console.log("Form submitted:", values);
       if (values) {
         dispatch(addPlot({
-          data: values, "projectId": id,
+          data: {...values, profile: customerDetails}, "projectId": id,
           "phaseId": "A"
         }));
       }
@@ -54,7 +64,12 @@ const PlotDetailsForm = () => {
   });
 
   useEffect(() => {
-    if (addPlotStatus == 'succeeded') router.push(`/ProjectDetails/${id}`);  // Redirect to customer list or any other page after update
+    console.log("final submitted data for customer", { ...customerDetails, projects: { ...project, plots: selectPlotData } })
+    if (addPlotStatus == 'succeeded') {
+      dispatch(putProfileData({ leadId: customerDetails.id, profileData: { status: 'finished', projects: { ...project, plots: selectPlotData } } }));
+      //dispatch(updateCustomerData({ ...customerDetails, projects: { ...project, plots: selectPlotData } }))
+      router.push(`/ProjectDetails/${id}/${customerId}`);  // Redirect to customer list or any other page after update
+    }
   }, [addPlotStatus])
 
   return (

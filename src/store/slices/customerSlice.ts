@@ -65,4 +65,6 @@ const customerSlice = createSlice({
   },
 });
 
+export const selectCustomerById = (state: any, id: any) =>
+  state.customers.customers.find((cust: any) => cust.id === id);
 export default customerSlice.reducer;

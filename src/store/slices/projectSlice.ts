@@ -122,5 +122,7 @@ export const selectProjects = (state: RootState) => state.projects.data;
 export const selectProjectsState = (state: RootState) => state.projects;
 export const selectProjectStatus = (state: RootState) => state.projects.status;
 export const selectProjectError = (state: RootState) => state.projects.error;
+export const selectProjectById = (state: { projects: ProjectState }, id: any) =>
+  state.projects.data.find((project) => project.id === id);
 
 export default projectSlice.reducer;

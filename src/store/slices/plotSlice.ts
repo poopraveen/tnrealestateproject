@@ -73,7 +73,7 @@ const plotSlice = createSlice({
   initialState,
   reducers: {
     resetPlotsState: (state) => {
-        state.data = [];
+        //state.data = [];
         state.status = 'idle';
         state.addStatus = 'idle';
         state.error = null;
@@ -115,5 +115,6 @@ export const selectPlots = (state: RootState) => state.plots.data;
 export const selectPlotStatus = (state: RootState) => state.plots.status;
 export const selectPlotError = (state: RootState) => state.plots.error;
 export const selectAddPlotStatus = (state: RootState) => state.plots.addStatus;
+export const selectAddPlotData = (state: RootState) => state.plots.data;
 
 export default plotSlice.reducer;

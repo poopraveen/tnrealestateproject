@@ -6,11 +6,11 @@ import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { MapPin, Search, PlusCircle, Edit } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPlots, selectPlots, selectPlotStatus, selectPlotError, resetPlotsState } from '../../../store/slices/plotSlice';
+import { fetchPlots, selectPlots, selectPlotStatus, selectPlotError, resetPlotsState } from '../../../../store/slices/plotSlice';
 
 const PlotInformation: React.FC = () => {
   const { t } = useTranslation();
-  const { id } = useParams();  // Get project ID from URL params
+  const { id, customerId } = useParams();  // Get project ID from URL params
   const dispatch = useDispatch();
 
   // Local state for active phase
@@ -24,10 +24,10 @@ const PlotInformation: React.FC = () => {
   // Fetch plots when the component mounts or project ID changes
   useEffect(() => {
     dispatch(resetPlotsState()); // Reset state on initial page load
-    if (id) {
+    if (id && customerId) {
       dispatch(fetchPlots(id));  // Fetch plots for the given project ID
     }
-  }, [id, dispatch]);
+  }, [id, dispatch, customerId]);
 
   return (
     <div className="p-6 max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
@@ -70,6 +70,7 @@ const PlotInformation: React.FC = () => {
               <p className="text-sm text-gray-600 dark:text-gray-300">{t('facing')}: {t(plot?.data?.facing)}</p>
               <p className="text-sm text-gray-600 dark:text-gray-300">{t('corner')}: {t(plot?.data?.plotCorner)}</p>
               <p className="text-sm text-gray-600 dark:text-gray-300">{t('status')}: {t(plot?.data?.plotStatus)}</p>
+              {plot?.data?.profile && <p className="text-sm text-gray-600 dark:text-gray-300">{t('profile')}: {t(plot?.data?.profile?.data?.personalDetails?.firstName)}</p>}
             </div>
             <button className="text-gray-500 hover:text-blue-500 dark:text-gray-300 dark:hover:text-blue-500">
               <Edit size={18} />
@@ -81,7 +82,7 @@ const PlotInformation: React.FC = () => {
       {/* Add New Plot Button */}
       <button className="w-full mt-6 p-3 flex items-center justify-center gap-2 bg-teal-500 text-white rounded-lg font-medium text-center hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-400">
         <PlusCircle size={18} />
-        <Link href={`/PlotDetail/${id}`}>
+        <Link href={`/PlotDetail/${id}/${customerId}`}>
           {t('addNewPlot')}
         </Link>
       </button>

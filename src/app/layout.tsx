@@ -1,6 +1,7 @@
 'use client'
 import { ReduxProvider } from "../store/provider";
 import "./globals.css";
+import { usePathname } from 'next/navigation';
 import Footer from '../app/components/Footer'
 import Header from '../app/components/Header'
 import { LoaderProvider } from './LoaderContext';  // Adjust path
@@ -14,6 +15,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isAuthPage = pathname === '/login' || pathname === '/signup'; // Exclude pages
   return (
     <html lang="en">
       <body className={`ntialiased chocolate-cream`}>
@@ -21,11 +24,11 @@ export default function RootLayout({
           <I18nextProvider i18n={i18n}>
             <ThemeProvider>
               <ReduxProvider>
-                <Header />
+                {!isAuthPage && <Header />}
                 <main className="flex-1"> {/* Ensure main content has bottom padding */}
                   {children}
                 </main>
-                <Footer />
+                {!isAuthPage && <Footer />}
               </ReduxProvider>
             </ThemeProvider>
           </I18nextProvider>

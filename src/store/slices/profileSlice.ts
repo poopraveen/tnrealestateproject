@@ -63,7 +63,7 @@ export const postProfileData = createAsyncThunk(
   }
 );
 
-export const putProfileData = createAsyncThunk(
+export const putProfileData: any = createAsyncThunk(
   'profile/putProfileData',
   async ({ leadId, profileData }: { leadId: string; profileData: any }, { rejectWithValue }) => {
     try {

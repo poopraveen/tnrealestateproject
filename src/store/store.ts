@@ -6,6 +6,7 @@ import customerReducer from './slices/customerSlice';
 import projectReducer from './slices/projectSlice';
 import customerDataReducer from './slices/editCustomerSlice';
 import plotReducer from './slices/plotSlice';
+import authReducer from './slices/auth';
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     projects: projectReducer,
     customerData: customerDataReducer,
     plots: plotReducer,
+    auth: authReducer,
   },
 });
 

@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProjects } from '../../store/slices/projectSlice';
+import { fetchProjects } from '../../../store/slices/projectSlice';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { FaMapMarkedAlt, FaBuilding, FaRegFileAlt, FaCheckCircle, FaDownload } from 'react-icons/fa'; // Importing icons
 
 const Projects = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { customerId } = useParams();  // Get project ID from URL params
 
   // Local state for handling collapsible behavior
   const [openProjectId, setOpenProjectId] = useState(null);
@@ -140,7 +142,7 @@ const Projects = () => {
 
                       {/* View More Link */}
                       <div className="mt-4">
-                        <Link href={`/ProjectDetails/${project.id}`} className="text-teal-500 dark:text-teal-400 hover:underline">
+                        <Link href={`/ProjectDetails/${project.id}/${customerId}`} className="text-teal-500 dark:text-teal-400 hover:underline">
                           {t('View More Details')}
                         </Link>
                       </div>

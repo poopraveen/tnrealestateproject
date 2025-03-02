@@ -147,7 +147,7 @@ const LeadManagement: React.FC = () => {
                 {/* Dropdown Menu */}
                 {openDropdown === index && (
                   <div ref={dropdownRef} className="absolute right-0 mt-2 bg-white dark:bg-gray-800 shadow-lg rounded-md w-40 p-2 z-10 border border-gray-200 dark:border-gray-700">
-                    <Link href="/ProjectList">
+                    <Link href={`/ProjectList/${lead.id}`}>
                       <button className="flex items-center w-full text-left px-2 py-2 text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600 rounded-md">
                         <FilePlus size={16} className="mr-2" />
                         {t('bookPlot')}

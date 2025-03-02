@@ -201,5 +201,17 @@
   "optional": "Optional",
   "taskCreated": "Task successfully created",
   "taskList": "Task List",
-  "viewMore": "View More"
+  "viewMore": "View More",
+  "signup": "Sign Up",
+  "login": "Login",
+  "password": "Password",
+  "name": "Full Name",
+  "nameRequired": "Name is required",
+  "emailRequired": "Email is required",
+  "passwordRequired": "Password is required",
+  "passwordMin": "Password must be at least 6 characters",
+  "invalidEmail": "Invalid email format",
+  "alreadyAccount": "Already have an account?",
+  "noAccount": "Don't have an account?",
+  "loading": "Loading..."
 }
