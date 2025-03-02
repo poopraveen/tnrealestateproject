@@ -107,3 +107,17 @@ footer {
   background-color: #1f2937;
 }
 
+@keyframes blink {
+  0% {
+    background-color: rgba(255, 0, 0, 0.3); /* Start with a slight red tint */
+  }
+  50% {
+    background-color: rgba(255, 0, 0, 0); /* Fade to fully transparent */
+  }
+  100% {
+    background-color: rgba(255, 0, 0, 0.3); /* Fade back to the initial tint */
+  }
+}
+.blinking {
+  animation: blink 5s infinite;
+}
