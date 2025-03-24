@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 
 export const uploadImage = createAsyncThunk(
   'profile/uploadImage',
@@ -21,7 +22,7 @@ export const uploadImage = createAsyncThunk(
       formData.append('file', fileBlob, `image.${mimeType.split('/')[1]}`);
 
       // Upload
-      const response = await fetch('https://real-pro-service.onrender.com/api/file/upload', {
+      const response = await fetchInterceptor('https://real-pro-service.onrender.com/api/file/upload','POST', {
         method: 'POST',
         body: formData,
       });
@@ -44,7 +45,7 @@ export const postProfileData = createAsyncThunk(
   'profile/postProfileData',
   async (profileData: any, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://real-pro-service.onrender.com/api/leads', {
+      const response = await fetchInterceptor('https://real-pro-service.onrender.com/api/leads','POST', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +68,7 @@ export const putProfileData: any = createAsyncThunk(
   'profile/putProfileData',
   async ({ leadId, profileData }: { leadId: string; profileData: any }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://real-pro-service.onrender.com/api/leads/${leadId}`, {
+      const response = await fetchInterceptor(`https://real-pro-service.onrender.com/api/leads/${leadId}`,'PUT', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

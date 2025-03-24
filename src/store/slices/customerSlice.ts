@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 
 interface Customer {
     id: string;
@@ -33,7 +34,7 @@ export const fetchCustomers = createAsyncThunk(
   'customers/fetchCustomers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://real-pro-service.onrender.com/api/leads');
+      const response = await fetchInterceptor('https://real-pro-service.onrender.com/api/leads', 'GET');
       if (!response.ok) {
         throw new Error('Failed to fetch customers');
       }

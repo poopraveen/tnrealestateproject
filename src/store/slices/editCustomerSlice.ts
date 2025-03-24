@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 
 export const fetchCustomerById : any= createAsyncThunk(
   'customer/fetchCustomerById',
   async (id) => {
-    const response = await fetch(`https://real-pro-service.onrender.com/api/leads/${id}`);
+    const response = await fetchInterceptor(`https://real-pro-service.onrender.com/api/leads/${id}`, 'GET');
     const data = await response.json();
     return data.data;
   }
@@ -12,7 +13,7 @@ export const fetchCustomerById : any= createAsyncThunk(
 export const updateCustomerData: any = createAsyncThunk(
     'customer/updateCustomerData',
     async (customerData: any) => {
-      const response = await fetch(`https://real-pro-service.onrender.com/api/leads/${customerData.id}`, {
+      const response = await fetchInterceptor(`https://real-pro-service.onrender.com/api/leads/${customerData.id}`,'PUT', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',  // ✅ Fix: Specify JSON content type

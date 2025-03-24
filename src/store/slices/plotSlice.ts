@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 import { RootState } from "../store";
 
 // Define the plot structure
@@ -29,7 +30,7 @@ const initialState: PlotState = {
 export const fetchPlots: any = createAsyncThunk(
   "plots/fetchPlots",
   async (projectId: string) => {
-    const response = await fetch(`https://real-pro-service.onrender.com/api/plots/project/${projectId}`);
+    const response = await fetchInterceptor(`https://real-pro-service.onrender.com/api/plots/project/${projectId}`, 'GET');
     
     if (!response.ok) {
       throw new Error('Failed to fetch plots');
@@ -47,7 +48,7 @@ export const addPlot: any = createAsyncThunk(
     'plots/addPlot',
     async (newPlot: PlotData, { rejectWithValue }) => {
       try {
-        const response = await fetch('https://real-pro-service.onrender.com/api/plots', {
+        const response = await fetchInterceptor('https://real-pro-service.onrender.com/api/plots', 'POST', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { setCookie, deleteCookie } from 'cookies-next';
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 import { redirect } from 'next/navigation';
 
 interface AuthState {
   user: { id: string; email: string } | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
+  isAuthenticated: boolean
 }
 
 // Initial state
@@ -13,6 +15,7 @@ const initialState: AuthState = {
   user: null,
   status: 'idle',
   error: null,
+  isAuthenticated: false,
 };
 
 // API URLs
@@ -23,10 +26,10 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/login`, {
+      const response = await fetchInterceptor(`${BASE_URL}/login?username=${email}&password=${password}`,'POST', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username: email, password }),
       });
 
       if (!response.ok) {
@@ -34,6 +37,7 @@ export const loginUser = createAsyncThunk(
       }
 
       const data = await response.json();
+      debugger
       setCookie('token', data.token, { path: '/' }); // Store token in cookies
       return data.user;
     } catch (error: any) {
@@ -47,7 +51,7 @@ export const signupUser = createAsyncThunk(
   'auth/signupUser',
   async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}/signup`, {
+      const response = await fetchInterceptor(`${BASE_URL}/signup`,'POST', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -85,7 +89,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ id: string; email: string }>) => {
         state.status = 'succeeded';
         state.user = action.payload;
-        redirect('/'); // Redirect to home
+        state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';

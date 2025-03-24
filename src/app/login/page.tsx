@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Link from 'next/link';
@@ -14,8 +14,15 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const { status, error } = useSelector((state: RootState) => state.auth);
+  const { status, error, isAuthenticated } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/'); // ✅ Redirect AFTER successful login
+    }
+  }, [isAuthenticated, router]);
 
   const formik = useFormik({
     initialValues: {
@@ -23,7 +30,7 @@ const Login = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().email(t('invalidEmail')).required(t('emailRequired')),
+      email: Yup.string().required(t('emailRequired')), //email: Yup.string().email(t('invalidEmail')).required(t('emailRequired')),
       password: Yup.string().required(t('passwordRequired')),
     }),
     onSubmit: async (values) => {
@@ -49,7 +56,7 @@ const Login = () => {
           <div>
             <label className="block text-gray-700 dark:text-gray-300">{t('email')}</label>
             <input
-              type="email"
+              type="text"
               className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
               {...formik.getFieldProps('email')}
             />

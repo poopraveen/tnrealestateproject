@@ -73,7 +73,7 @@ const PlotDetailsForm = () => {
   }, [addPlotStatus])
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+    <div className="min-h-screen flex items-center justify-center dark:bg-gray-900 dark:text-white">
       <h2 className="text-xl font-semibold text-center mb-4 text-black dark:text-white">
         {t("plotDetails")}
       </h2>

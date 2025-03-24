@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { fetchInterceptor } from '../../app/lib/fetchInterceptor';
 import { RootState } from "../store";
 
 // Define the project structure
@@ -26,7 +27,7 @@ const initialState: ProjectState = {
 
 // Async thunk to fetch projects from API
 export const fetchProjects = createAsyncThunk("projects/fetchProjects", async () => {
-  const response = await fetch("https://real-pro-service.onrender.com/api/projects"); // Replace with actual API
+  const response = await fetchInterceptor("https://real-pro-service.onrender.com/api/projects",'GET'); // Replace with actual API
   
   if (!response.ok) {
     throw new Error('Failed to fetch projects');
@@ -44,7 +45,7 @@ export const addProjectData: any = createAsyncThunk(
   async (newProject: any, { rejectWithValue }) => {
     try {
       // Simulate API call
-      const response = await fetch('https://real-pro-service.onrender.com/api/projects', {
+      const response = await fetchInterceptor('https://real-pro-service.onrender.com/api/projects','POST', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

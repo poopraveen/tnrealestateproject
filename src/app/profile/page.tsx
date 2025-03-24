@@ -152,7 +152,7 @@ const RealEstateForm: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="container mx-auto p-6 dark:bg-gray-900 dark:text-white">
+    <div className="min-h-screen flex items-center justify-center dark:bg-gray-900 dark:text-white">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
